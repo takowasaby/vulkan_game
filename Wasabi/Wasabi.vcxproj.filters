@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{9e18662a-e3e5-45f9-a663-235f53e12967}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{0e301ea6-fc33-4959-a93e-9d5da99898e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\graphic">
+      <UniqueIdentifier>{4fd6826c-67f7-4f3c-aedd-aea3b3c3b528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\window">
+      <UniqueIdentifier>{5ef01793-5b3b-4ef4-b654-38160ef3464a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphic">
+      <UniqueIdentifier>{4f8e68c0-315e-4eab-9952-8f6f631506e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\window">
+      <UniqueIdentifier>{96661f22-5d8c-4043-b13f-692ed8729611}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Wasabi\window\window.h">
+      <Filter>include\window</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\window\window.cpp">
+      <Filter>src\window</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

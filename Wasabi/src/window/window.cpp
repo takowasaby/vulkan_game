@@ -1,0 +1,25 @@
+#include <Wasabi/window/window.h>
+
+Window::Window(int defaultWidth, int defaultHeight) {
+	glfwInit();
+
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+
+	_window = glfwCreateWindow(defaultWidth, defaultHeight, "Vulkan", nullptr, nullptr);
+	// glfwSetWindowUserPointer(_window, this);
+	// glfwSetFramebufferSizeCallback(_window, framebufferResizeCallback);
+}
+
+Window::Window()
+	: Window(800, 600) {}
+
+Window::~Window() {
+	glfwDestroyWindow(_window);
+	glfwTerminate();
+}
+
+bool Window::continueMainLoop() {
+	if (glfwWindowShouldClose(_window)) return false;
+	glfwPollEvents();
+	return true;
+}
