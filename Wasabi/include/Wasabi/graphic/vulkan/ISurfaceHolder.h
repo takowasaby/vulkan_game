@@ -1,7 +1,6 @@
 #pragma once
 
-class VkSurfaceKHR_T;
-using VkSurfaceKHR = VkSurfaceKHR_T *;
+#include <Wasabi/libdef/vulkan.h>
 
 namespace wsb {
 	namespace graphic {

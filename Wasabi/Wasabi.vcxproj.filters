@@ -31,6 +31,9 @@
     <Filter Include="src\window\glfw">
       <UniqueIdentifier>{9309f23a-d759-4619-961e-46ce858d3dbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\libdef">
+      <UniqueIdentifier>{61af83ec-b8b9-4811-b306-3ad80915cbad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Wasabi\window\glfw\window.h">
@@ -96,6 +99,18 @@
     <ClInclude Include="include\Wasabi\window\glfw\windowHandler.h">
       <Filter>include\window\glfw</Filter>
     </ClInclude>
+    <ClInclude Include="include\Wasabi\window\glfw\swapChainHandler.h">
+      <Filter>include\window\glfw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\window\glfw\surfaceHandler.h">
+      <Filter>include\window\glfw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\libdef\vulkan.h">
+      <Filter>include\libdef</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\libdef\glfw.h">
+      <Filter>include\libdef</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\graphic\vulkan\graphicEngine.cpp">
@@ -156,6 +171,12 @@
       <Filter>src\graphic\vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\window\glfw\windowHandler.cpp">
+      <Filter>src\window\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window\glfw\swapChainHandler.cpp">
+      <Filter>src\window\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window\glfw\surfaceHandler.cpp">
       <Filter>src\window\glfw</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once
 
-class GLFWwindow;
+#include <Wasabi/libdef/glfw.h>
 
 namespace wsb {
 	namespace window {

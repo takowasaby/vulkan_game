@@ -36,8 +36,12 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\presentQueue.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\queueFamilies.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\transientCommandPool.h" />
+    <ClInclude Include="include\Wasabi\libdef\glfw.h" />
+    <ClInclude Include="include\Wasabi\libdef\vulkan.h" />
     <ClInclude Include="include\Wasabi\window\glfw\surface.h" />
+    <ClInclude Include="include\Wasabi\window\glfw\surfaceHandler.h" />
     <ClInclude Include="include\Wasabi\window\glfw\swapChain.h" />
+    <ClInclude Include="include\Wasabi\window\glfw\swapChainHandler.h" />
     <ClInclude Include="include\Wasabi\window\glfw\window.h" />
     <ClInclude Include="include\Wasabi\window\glfw\windowHandler.h" />
   </ItemGroup>
@@ -59,7 +63,9 @@
     <ClCompile Include="src\graphic\vulkan\renderPass.cpp" />
     <ClCompile Include="src\graphic\vulkan\transientCommandPool.cpp" />
     <ClCompile Include="src\window\glfw\surface.cpp" />
+    <ClCompile Include="src\window\glfw\surfaceHandler.cpp" />
     <ClCompile Include="src\window\glfw\swapChain.cpp" />
+    <ClCompile Include="src\window\glfw\swapChainHandler.cpp" />
     <ClCompile Include="src\window\glfw\window.cpp" />
     <ClCompile Include="src\window\glfw\windowHandler.cpp" />
   </ItemGroup>

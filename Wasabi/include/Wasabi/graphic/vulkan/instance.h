@@ -2,8 +2,7 @@
 
 #include <vector>
 
-class VkInstance_T;
-using VkInstance = VkInstance_T *;
+#include <Wasabi/graphic/vulkan/IImageDrawTarget.h>
 
 namespace wsb {
 	namespace graphic {

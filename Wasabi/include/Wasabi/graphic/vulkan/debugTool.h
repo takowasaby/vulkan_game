@@ -2,8 +2,7 @@
 
 #include <array>
 
-class VkDebugUtilsMessengerEXT_T;
-using VkDebugUtilsMessengerEXT = VkDebugUtilsMessengerEXT_T *;
+#include <Wasabi/graphic/vulkan/IImageDrawTarget.h>
 
 namespace wsb {
 	namespace graphic {
@@ -23,7 +22,7 @@ namespace wsb {
 					const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
 					void* pUserData);
 				static bool checkValidationLayerSupport();
-				static const VkDebugUtilsMessengerCreateInfoEXT& populateDebugMessengerCreateInfo();
+				static VkDebugUtilsMessengerCreateInfoEXT populateDebugMessengerCreateInfo();
 			private:
 				const VkInstance& _instance;
 
