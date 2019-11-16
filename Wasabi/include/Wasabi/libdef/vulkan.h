@@ -1,5 +1,8 @@
 #pragma once
 
+struct VkSurfaceKHR_T;
+using VkSurfaceKHR = VkSurfaceKHR_T *;
+
 struct VkSwapchainKHR_T;
 using VkSwapchainKHR = VkSwapchainKHR_T *;
 
@@ -21,7 +24,13 @@ using VkDebugUtilsMessengerEXT = VkDebugUtilsMessengerEXT_T *;
 struct VkInstance_T;
 using VkInstance = VkInstance_T *;
 
+struct VkPhysicalDevice_T;
+using VkPhysicalDevice = VkPhysicalDevice_T *;
+
 struct VkExtent2D;
 struct VkPresentInfoKHR;
+struct VkSurfaceCapabilitiesKHR;
+struct VkSurfaceFormatKHR;
 
 enum VkFormat;
+enum VkPresentModeKHR;
