@@ -18,12 +18,12 @@ namespace wsb {
 				};
 
 			public:
-				Surface(VkInstance instance, GLFWwindow* window);
+				Surface(const VkInstance& instance, GLFWwindow* window);
 				~Surface();
 
-				VkSurfaceKHR getSurfaceHandle();
-				bool getPhysicalDeviceSupport(VkPhysicalDevice device, uint32_t index);
-				SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+				VkSurfaceKHR getSurfaceHandle() const;
+				bool isPhysicalDeviceSupport(VkPhysicalDevice device, uint32_t index) const;
+				SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device) const;
 
 			private:
 				const VkInstance& _instance;

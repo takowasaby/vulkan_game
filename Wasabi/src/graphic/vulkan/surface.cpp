@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 namespace wsb::graphic::vulkan {
-	Surface::Surface(VkInstance instance, GLFWwindow* window)
+	Surface::Surface(const VkInstance& instance, GLFWwindow* window)
 		: _instance(instance)
 	{
 		if (glfwCreateWindowSurface(_instance, window, nullptr, &_surface) != VK_SUCCESS) {
@@ -19,19 +19,19 @@ namespace wsb::graphic::vulkan {
 		vkDestroySurfaceKHR(_instance, _surface, nullptr);
 	}
 
-	VkSurfaceKHR Surface::getSurfaceHandle()
+	VkSurfaceKHR Surface::getSurfaceHandle() const
 	{
 		return _surface;
 	}
 
-	bool Surface::getPhysicalDeviceSupport(VkPhysicalDevice device, uint32_t index)
+	bool Surface::isPhysicalDeviceSupport(VkPhysicalDevice device, uint32_t index) const
 	{
 		VkBool32 presentSupport = false;
 		vkGetPhysicalDeviceSurfaceSupportKHR(device, index, _surface, &presentSupport);
 		return static_cast<bool>(presentSupport);
 	}
 
-	Surface::SwapChainSupportDetails Surface::querySwapChainSupport(VkPhysicalDevice device)
+	Surface::SwapChainSupportDetails Surface::querySwapChainSupport(VkPhysicalDevice device) const
 	{
 		SwapChainSupportDetails details;
 

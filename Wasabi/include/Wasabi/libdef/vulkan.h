@@ -27,6 +27,9 @@ using VkInstance = VkInstance_T *;
 struct VkPhysicalDevice_T;
 using VkPhysicalDevice = VkPhysicalDevice_T *;
 
+struct VkPhysicalDevice_T;
+using VkPhysicalDevice = VkPhysicalDevice_T *;
+
 struct VkExtent2D;
 struct VkPresentInfoKHR;
 struct VkSurfaceCapabilitiesKHR;
@@ -34,3 +37,6 @@ struct VkSurfaceFormatKHR;
 
 enum VkFormat;
 enum VkPresentModeKHR;
+
+using VkFlags =  uint32_t;
+using VkMemoryPropertyFlags = VkFlags;
