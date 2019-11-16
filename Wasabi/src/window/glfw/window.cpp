@@ -13,6 +13,8 @@ namespace wsb::window::glfw {
 		: Window(800, 600) {}
 
 	bool Window::continueMainLoop() {
-		return _handler.continueMainLoop();
+		if (glfwWindowShouldClose(_handler.getWindowHandle())) return false;
+		glfwPollEvents();
+		return true;
 	}
 }

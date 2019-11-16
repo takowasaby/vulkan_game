@@ -11,7 +11,7 @@ namespace wsb {
 				WindowHandler(int defaultWidth, int defaultHeight);
 				~WindowHandler();
 
-				bool continueMainLoop();
+				GLFWwindow *getWindowHandle();
 
 			private:
 				GLFWwindow *_window;

@@ -23,7 +23,7 @@ namespace wsb {
 					const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
 					void* pUserData);
 				static bool checkValidationLayerSupport();
-				static VkDebugUtilsMessengerCreateInfoEXT populateDebugMessengerCreateInfo();
+				static const VkDebugUtilsMessengerCreateInfoEXT& populateDebugMessengerCreateInfo();
 			private:
 				const VkInstance& _instance;
 

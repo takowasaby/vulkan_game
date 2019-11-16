@@ -20,9 +20,7 @@ namespace wsb::window::glfw {
 		glfwTerminate();
 	}
 
-	bool WindowHandler::continueMainLoop() {
-		if (glfwWindowShouldClose(_window)) return false;
-		glfwPollEvents();
-		return true;
+	GLFWwindow *WindowHandler::getWindowHandle() {
+		return _window;
 	}
 }

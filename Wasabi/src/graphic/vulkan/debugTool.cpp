@@ -83,7 +83,7 @@ namespace wsb::graphic::vulkan {
 		return true;
 	}
 
-	VkDebugUtilsMessengerCreateInfoEXT vulkan::DebugTool::populateDebugMessengerCreateInfo()
+	const VkDebugUtilsMessengerCreateInfoEXT& vulkan::DebugTool::populateDebugMessengerCreateInfo()
 	{
 		VkDebugUtilsMessengerCreateInfoEXT createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;

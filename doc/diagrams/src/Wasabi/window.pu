@@ -1,21 +1,34 @@
 @startuml window
 
 class Window {
-    - GLFWwindow
     + waitEvent()
     + isMinimization() -> bool
     + getCurrentFrameSize()
 }
 
 class Surface {
-    + VkSurfaceKHR
 }
 
 class SwapChain {
+}
+
+class WindowHandler {
+    - GLFWwindow
+}
+
+class SurfaceHandler {
+    + VkSurfaceKHR
+}
+
+class SwapChainHandler {
     + VkSwapchainKHR
 }
 
 Window o-- Surface
 Surface o-- SwapChain
+
+Window o-- WindowHandler
+Surface o-- SurfaceHandler
+SwapChain o-- SwapChainHandler
 
 @enduml
