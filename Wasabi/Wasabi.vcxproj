@@ -39,6 +39,7 @@
     <ClInclude Include="include\Wasabi\window\glfw\surface.h" />
     <ClInclude Include="include\Wasabi\window\glfw\swapChain.h" />
     <ClInclude Include="include\Wasabi\window\glfw\window.h" />
+    <ClInclude Include="include\Wasabi\window\glfw\windowHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\graphic\vulkan\bufferMemoryArea.cpp" />
@@ -60,6 +61,7 @@
     <ClCompile Include="src\window\glfw\surface.cpp" />
     <ClCompile Include="src\window\glfw\swapChain.cpp" />
     <ClCompile Include="src\window\glfw\window.cpp" />
+    <ClCompile Include="src\window\glfw\windowHandler.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

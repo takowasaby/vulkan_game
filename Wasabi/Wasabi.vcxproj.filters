@@ -93,6 +93,9 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\logicalDevice.h">
       <Filter>include\graphic\vulkan</Filter>
     </ClInclude>
+    <ClInclude Include="include\Wasabi\window\glfw\windowHandler.h">
+      <Filter>include\window\glfw</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\graphic\vulkan\graphicEngine.cpp">
@@ -151,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="src\graphic\vulkan\instance.cpp">
       <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window\glfw\windowHandler.cpp">
+      <Filter>src\window\glfw</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
