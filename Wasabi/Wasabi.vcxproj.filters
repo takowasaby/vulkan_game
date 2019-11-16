@@ -19,15 +19,138 @@
     <Filter Include="src\window">
       <UniqueIdentifier>{96661f22-5d8c-4043-b13f-692ed8729611}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\graphic\vulkan">
+      <UniqueIdentifier>{50d12b05-73b5-4b62-b012-f2cab0d52849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphic\vulkan">
+      <UniqueIdentifier>{fabca350-4fef-49ec-b0d1-f19147a0a984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\window\glfw">
+      <UniqueIdentifier>{9fab938e-7679-4200-a818-0e2117f374ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\window\glfw">
+      <UniqueIdentifier>{9309f23a-d759-4619-961e-46ce858d3dbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Wasabi\window\window.h">
-      <Filter>include\window</Filter>
+    <ClInclude Include="include\Wasabi\window\glfw\window.h">
+      <Filter>include\window\glfw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\debugTool.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\graphicDevice.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\graphicEngine.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\graphicPipeline.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\graphicQueue.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\graphicRender.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\physicalDevice.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\presentQueue.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\queueFamilies.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\bufferMemoryArea.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\descriptorPool.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\commandPool.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\window\glfw\surface.h">
+      <Filter>include\window\glfw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\window\glfw\swapChain.h">
+      <Filter>include\window\glfw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\IImageDrawTarget.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\ISurfaceHolder.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\transientCommandPool.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\instance.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\logicalDevice.h">
+      <Filter>include\graphic\vulkan</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\window\window.cpp">
-      <Filter>src\window</Filter>
+    <ClCompile Include="src\graphic\vulkan\graphicEngine.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window\glfw\window.cpp">
+      <Filter>src\window\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\bufferMemoryArea.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\commandPool.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\debugTool.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\descriptorPool.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\graphicDevice.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\graphicPipeline.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\graphicQueue.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\graphicRender.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\physicalDevice.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\presentQueue.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\queueFamilies.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\renderPass.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\transientCommandPool.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window\glfw\surface.cpp">
+      <Filter>src\window\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window\glfw\swapChain.cpp">
+      <Filter>src\window\glfw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\logicalDevice.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\instance.cpp">
+      <Filter>src\graphic\vulkan</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

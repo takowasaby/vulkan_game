@@ -19,10 +19,47 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Wasabi\window\window.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\bufferMemoryArea.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\commandPool.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\debugTool.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\descriptorPool.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\graphicDevice.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\graphicEngine.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\graphicPipeline.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\graphicQueue.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\graphicRender.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\IImageDrawTarget.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\instance.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\ISurfaceHolder.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\logicalDevice.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\physicalDevice.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\presentQueue.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\queueFamilies.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\transientCommandPool.h" />
+    <ClInclude Include="include\Wasabi\window\glfw\surface.h" />
+    <ClInclude Include="include\Wasabi\window\glfw\swapChain.h" />
+    <ClInclude Include="include\Wasabi\window\glfw\window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\window\window.cpp" />
+    <ClCompile Include="src\graphic\vulkan\bufferMemoryArea.cpp" />
+    <ClCompile Include="src\graphic\vulkan\commandPool.cpp" />
+    <ClCompile Include="src\graphic\vulkan\debugTool.cpp" />
+    <ClCompile Include="src\graphic\vulkan\descriptorPool.cpp" />
+    <ClCompile Include="src\graphic\vulkan\graphicDevice.cpp" />
+    <ClCompile Include="src\graphic\vulkan\graphicEngine.cpp" />
+    <ClCompile Include="src\graphic\vulkan\graphicPipeline.cpp" />
+    <ClCompile Include="src\graphic\vulkan\graphicQueue.cpp" />
+    <ClCompile Include="src\graphic\vulkan\graphicRender.cpp" />
+    <ClCompile Include="src\graphic\vulkan\instance.cpp" />
+    <ClCompile Include="src\graphic\vulkan\logicalDevice.cpp" />
+    <ClCompile Include="src\graphic\vulkan\physicalDevice.cpp" />
+    <ClCompile Include="src\graphic\vulkan\presentQueue.cpp" />
+    <ClCompile Include="src\graphic\vulkan\queueFamilies.cpp" />
+    <ClCompile Include="src\graphic\vulkan\renderPass.cpp" />
+    <ClCompile Include="src\graphic\vulkan\transientCommandPool.cpp" />
+    <ClCompile Include="src\window\glfw\surface.cpp" />
+    <ClCompile Include="src\window\glfw\swapChain.cpp" />
+    <ClCompile Include="src\window\glfw\window.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

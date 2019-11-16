@@ -1,7 +1,7 @@
-#include <Wasabi/window/window.h>
+#include <Wasabi/window/glfw/window.h>
 
 int main(int argc, char* argv[]) {
-	Window window;
+	wsb::window::glfw::Window window;
 	while (window.continueMainLoop()) {
 
 	}

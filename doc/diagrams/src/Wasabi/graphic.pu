@@ -1,0 +1,90 @@
+@startuml graphic
+
+interface ISurfaceHolder {
+    + findQueueFamilies()
+    + querySwapChainSupport()
+}
+interface IImageDrawTarget {
+    + GetTargetImages()
+}
+
+class GraphicEngine {
+}
+class Instance {
+    - VkInstance
+}
+class GraphicDevice {
+}
+class DebugTool {
+    - VkDebugUtilsMessengerEXT
+}
+
+
+class PhysicalDevice {
+    - VkPhysicalDevice
+}
+class LogicalDevice {
+    - VkDevice
+}
+class GraphicRender {
+
+}
+class QueueFamilies {
+
+}
+
+
+class BufferMemoryArea {
+
+}
+class DescriptorPool {
+    + VkDescriptorPool
+}
+class CommandPool {
+    + VkCommandPool
+}
+class TransientCommandPool {
+    + VkCommandPool
+}
+
+class RenderPass {
+    + VkRenderPass
+}
+
+class GraphicPipeline {
+    + VkPipeline
+    + VkPipelineLayout
+}
+
+class GraphicQueue {
+    + VkQueue
+}
+class PresentQueue {
+    + VkQueue
+}
+
+GraphicEngine o-- Instance
+GraphicEngine o-- GraphicDevice
+GraphicEngine o-- DebugTool
+
+GraphicDevice o-- PhysicalDevice
+GraphicDevice o-- LogicalDevice
+GraphicDevice o-- QueueFamilies
+GraphicDevice o-- GraphicRender
+
+GraphicRender o-- RenderPass
+GraphicRender o-- GraphicPipeline
+GraphicRender o-- BufferMemoryArea
+
+BufferMemoryArea o-- DescriptorPool
+BufferMemoryArea o-- CommandPool
+BufferMemoryArea o-- TransientCommandPool
+
+PhysicalDevice -left-> ISurfaceHolder
+
+GraphicRender -left-> IImageDrawTarget
+
+QueueFamilies o-- GraphicQueue
+QueueFamilies o-- PresentQueue
+
+@enduml
