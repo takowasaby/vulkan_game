@@ -2,7 +2,7 @@
 
 #include <array>
 
-#include <Wasabi/graphic/vulkan/IImageDrawTarget.h>
+#include <Wasabi/libdef/vulkan.h>
 
 namespace wsb {
 	namespace graphic {
