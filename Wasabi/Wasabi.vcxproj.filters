@@ -75,18 +75,6 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\commandPool.h">
       <Filter>include\graphic\vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="include\Wasabi\window\glfw\surface.h">
-      <Filter>include\window\glfw</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Wasabi\window\glfw\swapChain.h">
-      <Filter>include\window\glfw</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Wasabi\graphic\vulkan\IImageDrawTarget.h">
-      <Filter>include\graphic\vulkan</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Wasabi\graphic\vulkan\ISurfaceHolder.h">
-      <Filter>include\graphic\vulkan</Filter>
-    </ClInclude>
     <ClInclude Include="include\Wasabi\graphic\vulkan\transientCommandPool.h">
       <Filter>include\graphic\vulkan</Filter>
     </ClInclude>
@@ -96,20 +84,17 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\logicalDevice.h">
       <Filter>include\graphic\vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="include\Wasabi\window\glfw\windowHandler.h">
-      <Filter>include\window\glfw</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Wasabi\window\glfw\swapChainHandler.h">
-      <Filter>include\window\glfw</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Wasabi\window\glfw\surfaceHandler.h">
-      <Filter>include\window\glfw</Filter>
-    </ClInclude>
     <ClInclude Include="include\Wasabi\libdef\vulkan.h">
       <Filter>include\libdef</Filter>
     </ClInclude>
     <ClInclude Include="include\Wasabi\libdef\glfw.h">
       <Filter>include\libdef</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\swapChain.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\surface.h">
+      <Filter>include\graphic\vulkan</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,26 +143,17 @@
     <ClCompile Include="src\graphic\vulkan\transientCommandPool.cpp">
       <Filter>src\graphic\vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\window\glfw\surface.cpp">
-      <Filter>src\window\glfw</Filter>
-    </ClCompile>
-    <ClCompile Include="src\window\glfw\swapChain.cpp">
-      <Filter>src\window\glfw</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphic\vulkan\logicalDevice.cpp">
       <Filter>src\graphic\vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\graphic\vulkan\instance.cpp">
       <Filter>src\graphic\vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\window\glfw\windowHandler.cpp">
-      <Filter>src\window\glfw</Filter>
+    <ClCompile Include="src\graphic\vulkan\swapChain.cpp">
+      <Filter>src\graphic\vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\window\glfw\swapChainHandler.cpp">
-      <Filter>src\window\glfw</Filter>
-    </ClCompile>
-    <ClCompile Include="src\window\glfw\surfaceHandler.cpp">
-      <Filter>src\window\glfw</Filter>
+    <ClCompile Include="src\graphic\vulkan\surface.cpp">
+      <Filter>src\graphic\vulkan</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

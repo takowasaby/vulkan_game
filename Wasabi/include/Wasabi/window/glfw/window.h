@@ -1,6 +1,7 @@
+
 #pragma once
 
-#include <Wasabi/window/glfw/windowHandler.h>
+#include <Wasabi/libdef/glfw.h>
 
 namespace wsb {
 	namespace window {
@@ -9,11 +10,12 @@ namespace wsb {
 			public:
 				Window(int defaultWidth, int defaultHeight);
 				Window();
+				~Window();
 
 				bool continueMainLoop();
 
 			private:
-				WindowHandler _handler;
+				GLFWwindow* _window;
 
 			};
 		}

@@ -1,22 +1,19 @@
 @startuml graphic
 
-interface ISurfaceHolder {
-    + findQueueFamilies()
-    + querySwapChainSupport()
-}
-interface IImageDrawTarget {
-    + GetTargetImages()
-}
-
 class GraphicEngine {
 }
+
+
 class Instance {
     - VkInstance
 }
-class GraphicDevice {
-}
 class DebugTool {
     - VkDebugUtilsMessengerEXT
+}
+class Surface {
+    + VkSurfaceKHR
+}
+class GraphicDevice {
 }
 
 
@@ -25,6 +22,9 @@ class PhysicalDevice {
 }
 class LogicalDevice {
     - VkDevice
+}
+class SwapChain {
+    + VkSwapchainKHR
 }
 class GraphicRender {
 
@@ -66,13 +66,13 @@ class PresentQueue {
 GraphicEngine o-- Instance
 GraphicEngine o-- GraphicDevice
 GraphicEngine o-- DebugTool
+GraphicEngine o-- Surface
 
 GraphicDevice o-- PhysicalDevice
 GraphicDevice o-- LogicalDevice
 GraphicDevice o-- QueueFamilies
 GraphicDevice o-- GraphicRender
-
-GraphicDevice -left-> ISurfaceHolder
+GraphicDevice o-- SwapChain
 
 GraphicRender o-- RenderPass
 GraphicRender o-- GraphicPipeline
@@ -81,8 +81,6 @@ GraphicRender o-- BufferMemoryArea
 BufferMemoryArea o-- DescriptorPool
 BufferMemoryArea o-- CommandPool
 BufferMemoryArea o-- TransientCommandPool
-
-GraphicRender -left-> IImageDrawTarget
 
 QueueFamilies o-- GraphicQueue
 QueueFamilies o-- PresentQueue
