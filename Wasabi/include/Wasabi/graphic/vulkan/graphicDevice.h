@@ -9,6 +9,8 @@
 #include <Wasabi/graphic/vulkan/logicalDevice.h>
 #include <Wasabi/graphic/vulkan/queueFamilies.h>
 #include <Wasabi/graphic/vulkan/swapChain.h>
+#include <Wasabi/graphic/vulkan/bufferMemoryArea.h>
+#include <Wasabi/graphic/vulkan/graphicRender.h>
 
 namespace wsb {
 	namespace graphic {
@@ -24,6 +26,8 @@ namespace wsb {
 				LogicalDevice _logicalDevice;
 				QueueFamilies _queueFamilies;
 				SwapChain _swapChain;
+				BufferMemoryArea _bufferMemoryArea;
+				GraphicRender _render;
 			};
 		}
 	}

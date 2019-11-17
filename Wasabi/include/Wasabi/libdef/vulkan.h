@@ -48,6 +48,15 @@ using VkRenderPass = VkRenderPass_T *;
 struct VkFramebuffer_T;
 using VkFramebuffer = VkFramebuffer_T *;
 
+struct VkDescriptorPool_T;
+using VkDescriptorPool = VkDescriptorPool_T *;
+
+struct VkDescriptorSet_T;
+using VkDescriptorSet = VkDescriptorSet_T *;
+
+struct VkDescriptorSetLayout_T;
+using VkDescriptorSetLayout = VkDescriptorSetLayout_T *;
+
 struct VkExtent2D;
 struct VkPresentInfoKHR;
 struct VkSurfaceCapabilitiesKHR;
