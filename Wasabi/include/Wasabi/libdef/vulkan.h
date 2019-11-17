@@ -63,6 +63,9 @@ using VkCommandPool = VkCommandPool_T *;
 struct VkCommandBuffer_T;
 using VkCommandBuffer = VkCommandBuffer_T *;
 
+struct VkDescriptorSetLayout_T;
+using VkDescriptorSetLayout = VkDescriptorSetLayout_T *;
+
 struct VkExtent2D;
 struct VkPresentInfoKHR;
 struct VkSurfaceCapabilitiesKHR;
