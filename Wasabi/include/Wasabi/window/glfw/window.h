@@ -12,6 +12,7 @@ namespace wsb {
 				Window();
 				~Window();
 
+				GLFWwindow* getWindowHandle();
 				bool continueMainLoop();
 
 			private:

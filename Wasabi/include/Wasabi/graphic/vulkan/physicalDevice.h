@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Wasabi/libdef/vulkan.h>
+#include <Wasabi/graphic/vulkan/instance.h>
 #include <Wasabi/graphic/vulkan/surface.h>
 
 #include <optional>
@@ -23,7 +24,7 @@ namespace wsb {
 				};
 
 			public:
-				PhysicalDevice(const VkInstance& instance, const Surface& surface);
+				PhysicalDevice(const Instance& instance, const Surface& surface);
 
 				VkPhysicalDevice getPhysicalDeviceHandle() const;
 				uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) const;
@@ -34,8 +35,6 @@ namespace wsb {
 				static bool checkDeviceExtensionSupport(VkPhysicalDevice device);
 
 			private:
-				const VkInstance& _instance;
-
 				VkPhysicalDevice _physicalDevice;
 			};
 		}

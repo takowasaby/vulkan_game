@@ -34,6 +34,7 @@ struct VkExtent2D;
 struct VkPresentInfoKHR;
 struct VkSurfaceCapabilitiesKHR;
 struct VkSurfaceFormatKHR;
+struct VkDebugUtilsMessengerCreateInfoEXT;
 
 enum VkFormat;
 enum VkPresentModeKHR;

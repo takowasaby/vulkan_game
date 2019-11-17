@@ -15,18 +15,17 @@ namespace wsb::graphic::vulkan {
 			&& presentFamily.has_value();
 	}
 
-	PhysicalDevice::PhysicalDevice(const VkInstance& instance, const Surface& surface)
-		: _instance(instance)
+	PhysicalDevice::PhysicalDevice(const Instance& instance, const Surface& surface)
 	{
 		uint32_t deviceCount = 0;
-		vkEnumeratePhysicalDevices(_instance, &deviceCount, nullptr);
+		vkEnumeratePhysicalDevices(instance.getInstanceHandle(), &deviceCount, nullptr);
 
 		if (deviceCount == 0) {
 			throw std::runtime_error("failed to find GPUs with Vulkan support!");
 		}
 
 		std::vector<VkPhysicalDevice> devices(deviceCount);
-		vkEnumeratePhysicalDevices(_instance, &deviceCount, devices.data());
+		vkEnumeratePhysicalDevices(instance.getInstanceHandle(), &deviceCount, devices.data());
 
 		_physicalDevice = VK_NULL_HANDLE;
 		for (const auto& device : devices) {
@@ -39,6 +38,11 @@ namespace wsb::graphic::vulkan {
 		if (_physicalDevice == VK_NULL_HANDLE) {
 			throw std::runtime_error("failed to find a suitable GPU!");
 		}
+	}
+
+	VkPhysicalDevice PhysicalDevice::getPhysicalDeviceHandle() const
+	{
+		return _physicalDevice;
 	}
 
 	uint32_t PhysicalDevice::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) const

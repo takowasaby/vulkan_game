@@ -6,8 +6,13 @@
 #include <stdexcept>
 
 namespace wsb::graphic::vulkan {
-	Surface::Surface(const VkInstance& instance, GLFWwindow* window)
-		: _instance(instance)
+	vulkan::Surface::SwapChainSupportDetails::SwapChainSupportDetails()
+		: capabilities(std::make_shared<VkSurfaceCapabilitiesKHR>())
+	{
+	}
+
+	Surface::Surface(const Instance& instance, GLFWwindow* window)
+		: _instance(instance.getInstanceHandle())
 	{
 		if (glfwCreateWindowSurface(_instance, window, nullptr, &_surface) != VK_SUCCESS) {
 			throw std::runtime_error("failed to create window surface!");
@@ -35,7 +40,7 @@ namespace wsb::graphic::vulkan {
 	{
 		SwapChainSupportDetails details;
 
-		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, _surface, &details.capabilities);
+		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, _surface, details.capabilities.get());
 
 		uint32_t formatCount;
 		vkGetPhysicalDeviceSurfaceFormatsKHR(device, _surface, &formatCount, nullptr);

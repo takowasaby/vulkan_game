@@ -8,6 +8,22 @@
 #include <iostream>
 
 namespace wsb::graphic::vulkan {
+	VKAPI_ATTR VkBool32 VKAPI_CALL debugCallBack(
+		VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+		VkDebugUtilsMessageTypeFlagsEXT messageType,
+		const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+		void* pUserData)
+	{
+		if (messageSeverity >= VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT) {
+			std::cerr << "validation layer:" << pCallbackData->pMessage << "\n";
+		}
+		else {
+			std::cout << "validation layer:" << pCallbackData->pMessage << "\n";
+		}
+
+		return VK_FALSE;
+	}
+
 	VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger) {
 		auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
 		if (func != nullptr) {
@@ -24,8 +40,8 @@ namespace wsb::graphic::vulkan {
 		}
 	}
 
-	DebugTool::DebugTool(const VkInstance& instnce)
-		: _instance(instnce)
+	DebugTool::DebugTool(const Instance& instnce)
+		: _instance(instnce.getInstanceHandle())
 	{
 		if (!checkValidationLayerSupport()) {
 			throw std::runtime_error("validation layers requested, but not available!");
@@ -41,22 +57,6 @@ namespace wsb::graphic::vulkan {
 	DebugTool::~DebugTool()
 	{
 		DestroyDebugUtilsMessengerEXT(_instance, _debugMessenger, nullptr);
-	}
-
-	VKAPI_ATTR VkBool32 VKAPI_CALL DebugTool::debugCallBack(
-		VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
-		VkDebugUtilsMessageTypeFlagsEXT messageType,
-		const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
-		void* pUserData)
-	{
-		if (messageSeverity >= VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT) {
-			std::cerr << "validation layer:" << pCallbackData->pMessage << "\n";
-		}
-		else {
-			std::cout << "validation layer:" << pCallbackData->pMessage << "\n";
-		}
-
-		return VK_FALSE;
 	}
 	
 	bool DebugTool::checkValidationLayerSupport()

@@ -61,7 +61,7 @@ namespace wsb::graphic::vulkan {
 
 	}
 
-	const VkInstance& Instance::getInstanceRef()
+	VkInstance Instance::getInstanceHandle() const
 	{
 		return _instance;
 	}

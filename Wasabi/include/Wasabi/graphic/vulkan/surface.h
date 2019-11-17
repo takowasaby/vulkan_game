@@ -3,7 +3,10 @@
 #include <Wasabi/libdef/vulkan.h>
 #include <Wasabi/libdef/glfw.h>
 
+#include <Wasabi/graphic/vulkan/instance.h>
+
 #include <vector>
+#include <memory>
 #include <cstdint>
 
 namespace wsb {
@@ -12,13 +15,14 @@ namespace wsb {
 			class Surface {
 			public:
 				struct SwapChainSupportDetails {
-					VkSurfaceCapabilitiesKHR capabilities;
+					std::shared_ptr<VkSurfaceCapabilitiesKHR> capabilities;
 					std::vector<VkSurfaceFormatKHR> formats;
 					std::vector<VkPresentModeKHR> presentModes;
+					SwapChainSupportDetails();
 				};
 
 			public:
-				Surface(const VkInstance& instance, GLFWwindow* window);
+				Surface(const Instance& instance, GLFWwindow* window);
 				~Surface();
 
 				VkSurfaceKHR getSurfaceHandle() const;
@@ -26,8 +30,7 @@ namespace wsb {
 				SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device) const;
 
 			private:
-				const VkInstance& _instance;
-
+				VkInstance _instance;
 				VkSurfaceKHR _surface;
 
 			};

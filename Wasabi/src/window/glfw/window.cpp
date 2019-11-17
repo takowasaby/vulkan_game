@@ -23,6 +23,11 @@ namespace wsb::window::glfw {
 		glfwTerminate();
 	}
 
+	GLFWwindow* Window::getWindowHandle()
+	{
+		return _window;
+	}
+
 	bool Window::continueMainLoop() {
 		if (glfwWindowShouldClose(_window)) return false;
 		glfwPollEvents();

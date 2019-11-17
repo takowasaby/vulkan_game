@@ -2,21 +2,20 @@
 
 #include <Wasabi/graphic/vulkan/instance.h>
 #include <Wasabi/graphic/vulkan/debugTool.h>
-
-#include <vector>
-#include <array>
+#include <Wasabi/graphic/vulkan/surface.h>
 
 namespace wsb {
 	namespace graphic {
 		namespace vulkan {
 			class GraphicEngine {
 			public:
-				GraphicEngine();
+				GraphicEngine(GLFWwindow* targetWindow);
 			private:
 				Instance _instance;
 #ifdef _DEBUG
 				DebugTool _debugTool;
 #endif
+				Surface _surface;
 			};
 		}
 	}

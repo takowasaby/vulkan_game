@@ -14,7 +14,7 @@ namespace wsb {
 				Instance();
 				~Instance();
 
-				const VkInstance& getInstanceRef();
+				VkInstance getInstanceHandle() const;
 			private:
 				VkInstance _instance;
 			};

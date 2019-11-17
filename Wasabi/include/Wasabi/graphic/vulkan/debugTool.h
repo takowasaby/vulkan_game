@@ -4,6 +4,8 @@
 
 #include <Wasabi/libdef/vulkan.h>
 
+#include <Wasabi/graphic/vulkan/instance.h>
+
 namespace wsb {
 	namespace graphic {
 		namespace vulkan {
@@ -13,19 +15,13 @@ namespace wsb {
 
 			class DebugTool {
 			public:
-				DebugTool(const VkInstance& instance);
+				DebugTool(const Instance& instance);
 				~DebugTool();
 			public:
-				static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallBack(
-					VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
-					VkDebugUtilsMessageTypeFlagsEXT messageType,
-					const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
-					void* pUserData);
 				static bool checkValidationLayerSupport();
 				static VkDebugUtilsMessengerCreateInfoEXT populateDebugMessengerCreateInfo();
 			private:
-				const VkInstance& _instance;
-
+				VkInstance _instance;
 				VkDebugUtilsMessengerEXT _debugMessenger;
 			};
 		}
