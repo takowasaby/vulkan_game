@@ -39,6 +39,15 @@ using VkQueue = VkQueue_T *;
 struct VkFence_T;
 using VkFence = VkFence_T *;
 
+struct VkSwapchainKHR_T;
+using VkSwapchainKHR = VkSwapchainKHR_T *;
+
+struct VkRenderPass_T;
+using VkRenderPass = VkRenderPass_T *;
+
+struct VkFramebuffer_T;
+using VkFramebuffer = VkFramebuffer_T *;
+
 struct VkExtent2D;
 struct VkPresentInfoKHR;
 struct VkSurfaceCapabilitiesKHR;
