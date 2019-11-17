@@ -73,10 +73,10 @@ GraphicDevice o-- LogicalDevice
 GraphicDevice o-- QueueFamilies
 GraphicDevice o-- GraphicRender
 GraphicDevice o-- SwapChain
+GraphicDevice o-- BufferMemoryArea
 
 GraphicRender o-- RenderPass
 GraphicRender o-- GraphicPipeline
-GraphicRender o-- BufferMemoryArea
 
 BufferMemoryArea o-- DescriptorPool
 BufferMemoryArea o-- CommandPool
