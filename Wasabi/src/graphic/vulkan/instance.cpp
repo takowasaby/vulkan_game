@@ -22,6 +22,11 @@ namespace wsb::graphic::vulkan {
 
 	Instance::Instance() 
 	{
+#ifdef _DEBUG
+		if (!DebugTool::checkValidationLayerSupport()) {
+			throw std::runtime_error("validation layers requested, but not available!");
+		}
+#endif
 		VkApplicationInfo appInfo = {};
 		appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 		appInfo.pApplicationName = "Hello Triangle";
@@ -58,7 +63,7 @@ namespace wsb::graphic::vulkan {
 
 	Instance::~Instance()
 	{
-
+		vkDestroyInstance(_instance, nullptr);
 	}
 
 	VkInstance Instance::getInstanceHandle() const

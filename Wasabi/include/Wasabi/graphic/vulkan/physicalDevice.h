@@ -10,10 +10,6 @@
 namespace wsb {
 	namespace graphic {
 		namespace vulkan {
-			constexpr std::array<const char*, 1> deviceExtensions = {
-				VK_KHR_SWAPCHAIN_EXTENSION_NAME
-			};
-
 			class PhysicalDevice {
 			public:
 				struct QueueFamilyIndices {
@@ -24,15 +20,15 @@ namespace wsb {
 				};
 
 			public:
-				PhysicalDevice(const Instance& instance, const Surface& surface);
+				PhysicalDevice(const Instance& instance, const Surface& surface, const std::vector<const char*>& deviceExtensions);
 
 				VkPhysicalDevice getPhysicalDeviceHandle() const;
 				uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) const;
 			
 			private:
-				static bool isDeviceSuitable(VkPhysicalDevice device, const Surface& surface);
+				static bool isDeviceSuitable(VkPhysicalDevice device, const Surface& surface, const std::vector<const char*>& deviceExtensions);
 				static QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, const Surface& surface);
-				static bool checkDeviceExtensionSupport(VkPhysicalDevice device);
+				static bool checkDeviceExtensionSupport(VkPhysicalDevice device, const std::vector<const char*>& deviceExtensions);
 
 			private:
 				VkPhysicalDevice _physicalDevice;

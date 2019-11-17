@@ -13,6 +13,8 @@ namespace wsb {
 			public:
 				GraphicDevice(const Instance& instance, const Surface& surface);
 			private:
+				std::vector<const char*> _deviceExtensions;
+
 				PhysicalDevice _physicalDevice;
 			};
 		}

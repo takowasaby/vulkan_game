@@ -3,6 +3,7 @@
 #include <Wasabi/graphic/vulkan/instance.h>
 #include <Wasabi/graphic/vulkan/debugTool.h>
 #include <Wasabi/graphic/vulkan/surface.h>
+#include <Wasabi/graphic/vulkan/graphicDevice.h>
 
 namespace wsb {
 	namespace graphic {
@@ -16,6 +17,7 @@ namespace wsb {
 				DebugTool _debugTool;
 #endif
 				Surface _surface;
+				GraphicDevice _device;
 			};
 		}
 	}

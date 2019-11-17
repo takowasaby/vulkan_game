@@ -10,6 +10,7 @@ namespace wsb::graphic::vulkan {
 		, _debugTool(_instance)
 #endif
 		, _surface(_instance, targetWindow)
+		, _device(_instance, _surface)
 	{
 	}
 }

@@ -15,7 +15,7 @@ namespace wsb::graphic::vulkan {
 			&& presentFamily.has_value();
 	}
 
-	PhysicalDevice::PhysicalDevice(const Instance& instance, const Surface& surface)
+	PhysicalDevice::PhysicalDevice(const Instance& instance, const Surface& surface, const std::vector<const char*>& deviceExtensions)
 	{
 		uint32_t deviceCount = 0;
 		vkEnumeratePhysicalDevices(instance.getInstanceHandle(), &deviceCount, nullptr);
@@ -29,7 +29,7 @@ namespace wsb::graphic::vulkan {
 
 		_physicalDevice = VK_NULL_HANDLE;
 		for (const auto& device : devices) {
-			if (isDeviceSuitable(device, surface)) {
+			if (isDeviceSuitable(device, surface, deviceExtensions)) {
 				_physicalDevice = device;
 				break;
 			}
@@ -59,11 +59,11 @@ namespace wsb::graphic::vulkan {
 		throw std::runtime_error("failed to find suitable memory type!");
 	}
 
-	bool PhysicalDevice::isDeviceSuitable(VkPhysicalDevice device, const Surface& surface)
+	bool PhysicalDevice::isDeviceSuitable(VkPhysicalDevice device, const Surface& surface, const std::vector<const char*>& deviceExtensions)
 	{
 		QueueFamilyIndices indices = findQueueFamilies(device, surface);
 
-		bool extensionsSupported = checkDeviceExtensionSupport(device);
+		bool extensionsSupported = checkDeviceExtensionSupport(device, deviceExtensions);
 
 		bool swapChainAdequate = false;
 		if (extensionsSupported) {
@@ -104,7 +104,7 @@ namespace wsb::graphic::vulkan {
 		return indices;
 	}
 
-	bool PhysicalDevice::checkDeviceExtensionSupport(VkPhysicalDevice device)
+	bool PhysicalDevice::checkDeviceExtensionSupport(VkPhysicalDevice device, const std::vector<const char*>& deviceExtensions)
 	{
 		uint32_t extensionCount;
 		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
