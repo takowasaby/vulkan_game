@@ -12,14 +12,6 @@ namespace wsb {
 		namespace vulkan {
 			class PhysicalDevice {
 			public:
-				struct QueueFamilyIndices {
-					std::optional<uint32_t> graphicsFamily;
-					std::optional<uint32_t> presentFamily;
-
-					bool isComplete(); 
-				};
-
-			public:
 				PhysicalDevice(const Instance& instance, const Surface& surface, const std::vector<const char*>& deviceExtensions);
 
 				VkPhysicalDevice getPhysicalDeviceHandle() const;
@@ -27,7 +19,6 @@ namespace wsb {
 			
 			private:
 				static bool isDeviceSuitable(VkPhysicalDevice device, const Surface& surface, const std::vector<const char*>& deviceExtensions);
-				static QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, const Surface& surface);
 				static bool checkDeviceExtensionSupport(VkPhysicalDevice device, const std::vector<const char*>& deviceExtensions);
 
 			private:

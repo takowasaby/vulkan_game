@@ -30,14 +30,22 @@ using VkPhysicalDevice = VkPhysicalDevice_T *;
 struct VkPhysicalDevice_T;
 using VkPhysicalDevice = VkPhysicalDevice_T *;
 
+struct VkDevice_T;
+using VkDevice = VkDevice_T *;
+
+struct VkQueue_T;
+using VkQueue = VkQueue_T *;
+
 struct VkExtent2D;
 struct VkPresentInfoKHR;
 struct VkSurfaceCapabilitiesKHR;
 struct VkSurfaceFormatKHR;
 struct VkDebugUtilsMessengerCreateInfoEXT;
+struct VkDeviceQueueCreateInfo;
 
 enum VkFormat;
 enum VkPresentModeKHR;
 
 using VkFlags =  uint32_t;
 using VkMemoryPropertyFlags = VkFlags;
+using VkQueueFlags = VkFlags;

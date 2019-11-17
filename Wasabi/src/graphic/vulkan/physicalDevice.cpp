@@ -2,19 +2,13 @@
 #include <GLFW/glfw3.h>
 
 #include <Wasabi/graphic/vulkan/physicalDevice.h>
+#include <Wasabi/graphic/vulkan/queueFamilies.h>
 
 #include <vector>
 #include <set>
 #include <stdexcept>
 
 namespace wsb::graphic::vulkan {
-	bool PhysicalDevice::QueueFamilyIndices::isComplete()
-	{
-		return
-			graphicsFamily.has_value()
-			&& presentFamily.has_value();
-	}
-
 	PhysicalDevice::PhysicalDevice(const Instance& instance, const Surface& surface, const std::vector<const char*>& deviceExtensions)
 	{
 		uint32_t deviceCount = 0;
@@ -61,7 +55,7 @@ namespace wsb::graphic::vulkan {
 
 	bool PhysicalDevice::isDeviceSuitable(VkPhysicalDevice device, const Surface& surface, const std::vector<const char*>& deviceExtensions)
 	{
-		QueueFamilyIndices indices = findQueueFamilies(device, surface);
+		QueueFamilies::QueueFamilyIndices indices = QueueFamilies::findQueueFamilies(device, surface);
 
 		bool extensionsSupported = checkDeviceExtensionSupport(device, deviceExtensions);
 
@@ -72,36 +66,6 @@ namespace wsb::graphic::vulkan {
 		}
 
 		return indices.isComplete() && extensionsSupported&& swapChainAdequate;
-	}
-
-	PhysicalDevice::QueueFamilyIndices PhysicalDevice::findQueueFamilies(VkPhysicalDevice device, const Surface& surface)
-	{
-		QueueFamilyIndices indices;
-
-		uint32_t queueFamilyCount = 0;
-		vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
-
-		std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-		vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
-
-		uint32_t i = 0;
-		for (const auto& queueFamily : queueFamilies) {
-			if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
-				indices.graphicsFamily = i;
-			}
-
-			if (surface.isPhysicalDeviceSupport(device, i)) {
-				indices.presentFamily = i;
-			}
-
-			if (indices.isComplete()) {
-				break;
-			}
-
-			i++;
-		}
-
-		return indices;
 	}
 
 	bool PhysicalDevice::checkDeviceExtensionSupport(VkPhysicalDevice device, const std::vector<const char*>& deviceExtensions)
