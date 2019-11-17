@@ -11,7 +11,7 @@ namespace wsb::graphic::vulkan {
 			&& presentFamily.has_value();
 	}
 	
-	std::set<uint32_t> vulkan::QueueFamilies::QueueFamilyIndices::uniqueQueueFamilies()
+	std::set<uint32_t> QueueFamilies::QueueFamilyIndices::uniqueQueueFamilies()
 	{
 		std::set<uint32_t> uniqueQueueFamilies;
 		if (graphicsFamily.has_value()) uniqueQueueFamilies.insert(graphicsFamily.value());
@@ -23,6 +23,21 @@ namespace wsb::graphic::vulkan {
 		: _graphicQueue(device, indices.graphicsFamily.value())
 		, _presentQueue(device, indices.presentFamily.value())
 	{
+	}
+
+	VkQueue QueueFamilies::getPresentQueueHandle() const
+	{
+		return _presentQueue.getQueueHandle();
+	}
+
+	void QueueFamilies::submitGraphicQueue(uint32_t submitCount, const VkSubmitInfo* pSubmits, VkFence fence)
+	{
+		_graphicQueue.submit(submitCount, pSubmits, fence);
+	}
+
+	void QueueFamilies::waitGraphicQueueIdle()
+	{
+		_graphicQueue.waitIdle();
 	}
 
 	QueueFamilies::QueueFamilyIndices QueueFamilies::findQueueFamilies(VkPhysicalDevice device, const Surface& surface)
@@ -55,7 +70,7 @@ namespace wsb::graphic::vulkan {
 		return indices;
 	}
 
-	std::vector<VkDeviceQueueCreateInfo> vulkan::QueueFamilies::getQueueCreateInfos(VkPhysicalDevice device, const Surface& surface)
+	std::vector<VkDeviceQueueCreateInfo> QueueFamilies::getQueueCreateInfos(VkPhysicalDevice device, const Surface& surface)
 	{
 		QueueFamilyIndices indices = findQueueFamilies(device, surface);
 

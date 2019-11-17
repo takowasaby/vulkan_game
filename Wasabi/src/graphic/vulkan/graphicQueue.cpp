@@ -5,8 +5,8 @@
 
 namespace wsb::graphic::vulkan {
 	GraphicQueue::GraphicQueue(const LogicalDevice& device, uint32_t graphicsFamilyIndex)
+		: QueueBase(device, graphicsFamilyIndex)
 	{
-		vkGetDeviceQueue(device.getDeviceHandle(), graphicsFamilyIndex, 0, &_graphicQueue);
 	}
 
 	bool GraphicQueue::canUseAsGraphicQueue(VkQueueFlags flags)

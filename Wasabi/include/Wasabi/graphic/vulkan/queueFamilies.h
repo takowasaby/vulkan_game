@@ -28,6 +28,10 @@ namespace wsb {
 			public:
 				QueueFamilies(const LogicalDevice& device, const QueueFamilyIndices& indices);
 
+				VkQueue getPresentQueueHandle() const;
+				void submitGraphicQueue(uint32_t submitCount, const VkSubmitInfo* pSubmits, VkFence fence);
+				void waitGraphicQueueIdle();
+
 			public:
 				static QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, const Surface& surface);
 				static std::vector<VkDeviceQueueCreateInfo> getQueueCreateInfos(VkPhysicalDevice device, const Surface& surface);

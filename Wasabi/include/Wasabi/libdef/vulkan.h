@@ -36,12 +36,16 @@ using VkDevice = VkDevice_T *;
 struct VkQueue_T;
 using VkQueue = VkQueue_T *;
 
+struct VkFence_T;
+using VkFence = VkFence_T *;
+
 struct VkExtent2D;
 struct VkPresentInfoKHR;
 struct VkSurfaceCapabilitiesKHR;
 struct VkSurfaceFormatKHR;
 struct VkDebugUtilsMessengerCreateInfoEXT;
 struct VkDeviceQueueCreateInfo;
+struct VkSubmitInfo;
 
 enum VkFormat;
 enum VkPresentModeKHR;

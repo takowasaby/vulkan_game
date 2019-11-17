@@ -96,6 +96,9 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\surface.h">
       <Filter>include\graphic\vulkan</Filter>
     </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\queueBase.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\graphic\vulkan\graphicEngine.cpp">
@@ -153,6 +156,9 @@
       <Filter>src\graphic\vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\graphic\vulkan\surface.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\queueBase.cpp">
       <Filter>src\graphic\vulkan</Filter>
     </ClCompile>
   </ItemGroup>

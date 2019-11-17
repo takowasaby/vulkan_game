@@ -5,8 +5,8 @@
 
 namespace wsb::graphic::vulkan {
 	PresentQueue::PresentQueue(const LogicalDevice& device, uint32_t presentFamilyIndex)
+		: QueueBase(device, presentFamilyIndex)
 	{
-		vkGetDeviceQueue(device.getDeviceHandle(), presentFamilyIndex, 0, &_presentQueue);
 	}
 
 	bool PresentQueue::canUseAsPresentQueue(VkPhysicalDevice device, const Surface& surface, uint32_t index)

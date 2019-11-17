@@ -32,6 +32,7 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\logicalDevice.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\physicalDevice.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\presentQueue.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\queueBase.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\queueFamilies.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\surface.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\swapChain.h" />
@@ -54,6 +55,7 @@
     <ClCompile Include="src\graphic\vulkan\logicalDevice.cpp" />
     <ClCompile Include="src\graphic\vulkan\physicalDevice.cpp" />
     <ClCompile Include="src\graphic\vulkan\presentQueue.cpp" />
+    <ClCompile Include="src\graphic\vulkan\queueBase.cpp" />
     <ClCompile Include="src\graphic\vulkan\queueFamilies.cpp" />
     <ClCompile Include="src\graphic\vulkan\renderPass.cpp" />
     <ClCompile Include="src\graphic\vulkan\surface.cpp" />
