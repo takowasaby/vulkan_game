@@ -2,8 +2,7 @@
 
 #include <Wasabi/libdef/vulkan.h>
 
-#include <Wasabi/graphic/vulkan/surface.h>
-#include <Wasabi/graphic/vulkan/physicalDevice.h>
+#include <Wasabi/graphic/vulkan/queueFamilies.h>
 #include <Wasabi/graphic/vulkan/logicalDevice.h>
 #include <Wasabi/graphic/vulkan/swapChain.h>
 
@@ -16,7 +15,7 @@ namespace wsb {
 		namespace vulkan {
 			class BufferMemoryArea {
 			public:
-				BufferMemoryArea(const Surface& surface, const PhysicalDevice& physicalDevice, const LogicalDevice& device, const SwapChain& swapChain);
+				BufferMemoryArea(const LogicalDevice& device, QueueFamilies::QueueFamilyIndices indices, const SwapChain& swapChain);
 
 			private:
 				CommandPool _commandPool;

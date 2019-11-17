@@ -3,12 +3,10 @@
 
 #include <Wasabi/graphic/vulkan/bufferMemoryArea.h>
 
-#include <Wasabi/graphic/vulkan/queueFamilies.h>
-
 namespace wsb::graphic::vulkan {
-	BufferMemoryArea::BufferMemoryArea(const Surface& surface, const PhysicalDevice& physicalDevice, const LogicalDevice& device, const SwapChain& swapChain)
-		: _commandPool()
-		, _transientCommandPool()
+	BufferMemoryArea::BufferMemoryArea(const LogicalDevice& device, QueueFamilies::QueueFamilyIndices indices, const SwapChain& swapChain)
+		: _commandPool(device, indices)
+		, _transientCommandPool(device, indices)
 		, _descriptorPool(device, swapChain.getImageSize())
 	{
 	}
