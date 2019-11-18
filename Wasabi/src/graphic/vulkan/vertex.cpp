@@ -1,12 +1,18 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #include <Wasabi/graphic/vulkan/vertex.h>
 
 #include <cstddef>
 
 namespace wsb::graphic::vulkan {
-	VkVertexInputBindingDescription Vertex::getBindingDescription() {
+	struct Vertex {
+		alignas(8) glm::vec3 pos;
+		alignas(16) glm::vec4 color;
+	};
+
+	VkVertexInputBindingDescription getVertexBindingDescription() {
 		VkVertexInputBindingDescription bindingDescription = {};
 		bindingDescription.binding = 0;
 		bindingDescription.stride = sizeof(Vertex);
@@ -14,7 +20,7 @@ namespace wsb::graphic::vulkan {
 		return bindingDescription;
 	}
 
-	std::array<VkVertexInputAttributeDescription, 2> Vertex::getAttributeDescriptions() {
+	std::array<VkVertexInputAttributeDescription, 2> getVertexAttributeDescriptions() {
 		std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions = {};
 
 		attributeDescriptions[0].binding = 0;

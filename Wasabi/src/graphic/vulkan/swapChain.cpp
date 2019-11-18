@@ -110,9 +110,9 @@ namespace wsb::graphic::vulkan {
 		return _swapChainImageFormat;
 	}
 
-	size_t vulkan::SwapChain::getImageSize() const
+	uint32_t vulkan::SwapChain::getImageSize() const
 	{
-		return _swapChainImages.size();
+		return static_cast<uint32_t>(_swapChainImages.size());
 	}
 
 	std::vector<VkFramebuffer> vulkan::SwapChain::createFrameBuffer(VkRenderPass renderPass)

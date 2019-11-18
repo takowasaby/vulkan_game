@@ -66,6 +66,15 @@ using VkCommandBuffer = VkCommandBuffer_T *;
 struct VkDescriptorSetLayout_T;
 using VkDescriptorSetLayout = VkDescriptorSetLayout_T *;
 
+struct VkShaderModule_T;
+using VkShaderModule = VkShaderModule_T *;
+
+struct VkPipelineLayout_T;
+using VkPipelineLayout = VkPipelineLayout_T *;
+
+struct VkPipeline_T;
+using VkPipeline = VkPipeline_T *;
+
 struct VkExtent2D;
 struct VkPresentInfoKHR;
 struct VkSurfaceCapabilitiesKHR;
@@ -73,6 +82,8 @@ struct VkSurfaceFormatKHR;
 struct VkDebugUtilsMessengerCreateInfoEXT;
 struct VkDeviceQueueCreateInfo;
 struct VkSubmitInfo;
+struct VkVertexInputBindingDescription;
+struct VkVertexInputAttributeDescription;
 
 enum VkFormat;
 enum VkPresentModeKHR;

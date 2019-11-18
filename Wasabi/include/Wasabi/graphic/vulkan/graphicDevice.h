@@ -2,9 +2,6 @@
 
 #include <Wasabi/libdef/vulkan.h>
 
-#include <Wasabi/graphic/vulkan/instance.h>
-#include <Wasabi/graphic/vulkan/surface.h>
-
 #include <Wasabi/graphic/vulkan/physicalDevice.h>
 #include <Wasabi/graphic/vulkan/logicalDevice.h>
 #include <Wasabi/graphic/vulkan/queueFamilies.h>

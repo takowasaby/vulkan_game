@@ -15,7 +15,7 @@ namespace wsb::graphic::vulkan {
 		, _queueFamilies(_logicalDevice, QueueFamilies::findQueueFamilies(_physicalDevice.getPhysicalDeviceHandle(), surface))
 		, _swapChain(window, surface, _physicalDevice, _logicalDevice)
 		, _bufferMemoryArea(_logicalDevice, QueueFamilies::findQueueFamilies(_physicalDevice.getPhysicalDeviceHandle(), surface), _swapChain)
-		, _render()
+		, _render(_logicalDevice, _swapChain)
 	{
 	}
 }

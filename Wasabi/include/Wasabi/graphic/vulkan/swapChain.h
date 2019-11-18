@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <vector>
+#include <cstdint>
 
 namespace wsb {
 	namespace graphic {
@@ -19,7 +20,7 @@ namespace wsb {
 
 				VkExtent2D getExtent() const;
 				VkFormat getFormat() const;
-				size_t getImageSize() const;
+				uint32_t getImageSize() const;
 
 				std::vector<VkFramebuffer> createFrameBuffer(VkRenderPass renderPass);
 

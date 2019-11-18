@@ -56,4 +56,9 @@ namespace wsb::graphic::vulkan {
 	{
 		vkDestroyRenderPass(_device, _renderPass, nullptr);
 	}
+
+	VkRenderPass vulkan::RenderPass::getRenderPassHandle() const
+	{
+		return _renderPass;
+	}
 }

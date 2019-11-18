@@ -12,11 +12,11 @@ namespace wsb::graphic::vulkan {
 	GraphicPipeline::GraphicPipeline(const LogicalDevice& device, const SwapChain& swapChain, const RenderPass& renderPass, VkDescriptorSetLayout descriptorSetLayout)
 		: _device(device.getDeviceHandle())
 	{
-		VkShaderModule vertShaderModule = createShaderModule(_device, "shaders/out/vert.spv");
-		VkShaderModule fragShaderModule = createShaderModule(_device, "shaders/out/frag.spv");
+		VkShaderModule vertShaderModule = createShaderModule(_device, "C:/Users/tomio/Desktop/VulkanTest/VulkanTest/shaders/out/vert.spv");
+		VkShaderModule fragShaderModule = createShaderModule(_device, "C:/Users/tomio/Desktop/VulkanTest/VulkanTest/shaders/out/frag.spv");
 
-		auto bindingDescription = Vertex::getBindingDescription();
-		auto attributeDescriptions = Vertex::getAttributeDescriptions();
+		auto bindingDescription = getVertexBindingDescription();
+		auto attributeDescriptions = getVertexAttributeDescriptions();
 
 		VkPipelineShaderStageCreateInfo vertShaderStageInfo = {};
 		vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -122,8 +122,8 @@ namespace wsb::graphic::vulkan {
 
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
 		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutInfo.setLayoutCount = 1;
-		pipelineLayoutInfo.pSetLayouts = &descriptorSetLayout;
+		pipelineLayoutInfo.setLayoutCount = 0;
+		pipelineLayoutInfo.pSetLayouts = nullptr;
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
 		pipelineLayoutInfo.pPushConstantRanges = nullptr;
 
@@ -164,9 +164,10 @@ namespace wsb::graphic::vulkan {
 	GraphicPipeline::~GraphicPipeline()
 	{
 		vkDestroyPipeline(_device, _graphicsPipeline, nullptr);
+		vkDestroyPipelineLayout(_device, _pipelineLayout, nullptr);
 	}
 
-	VkShaderModule createShaderModule(VkDevice device, const std::string& filename) {
+	VkShaderModule GraphicPipeline::createShaderModule(VkDevice device, const std::string& filename) {
 		std::ifstream file(filename, std::ios::ate | std::ios::binary);
 
 		if (!file.is_open()) {
