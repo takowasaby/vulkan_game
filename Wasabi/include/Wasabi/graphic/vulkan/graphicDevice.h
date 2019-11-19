@@ -23,8 +23,8 @@ namespace wsb {
 				LogicalDevice _logicalDevice;
 				QueueFamilies _queueFamilies;
 				SwapChain _swapChain;
-				BufferMemoryArea _bufferMemoryArea;
 				GraphicRender _render;
+				BufferMemoryArea _bufferMemoryArea;
 			};
 		}
 	}

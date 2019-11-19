@@ -29,8 +29,8 @@ namespace wsb {
 				QueueFamilies(const LogicalDevice& device, const QueueFamilyIndices& indices);
 
 				VkQueue getPresentQueueHandle() const;
-				void submitGraphicQueue(uint32_t submitCount, const VkSubmitInfo* pSubmits, VkFence fence);
-				void waitGraphicQueueIdle();
+				void submitGraphicQueue(uint32_t submitCount, const VkSubmitInfo* pSubmits, VkFence fence) const;
+				void waitGraphicQueueIdle() const;
 
 			public:
 				static QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, const Surface& surface);

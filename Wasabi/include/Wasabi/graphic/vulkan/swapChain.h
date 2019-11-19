@@ -22,7 +22,7 @@ namespace wsb {
 				VkFormat getFormat() const;
 				uint32_t getImageSize() const;
 
-				std::vector<VkFramebuffer> createFrameBuffer(VkRenderPass renderPass);
+				std::vector<VkFramebuffer> createFrameBuffer(VkRenderPass renderPass) const;
 
 				VkSwapchainKHR getSwapChainHandle() const;
 

@@ -11,7 +11,13 @@ namespace wsb {
 			class GraphicRender {
 			public:
 				GraphicRender(const LogicalDevice& device, const SwapChain& swapChain);
-				~GraphicRender();
+
+				std::vector<VkFramebuffer> createFrameBufferFromSwapChain(const SwapChain& swapChain) const;
+
+				VkRenderPass getRenderPassHandle() const;
+				VkPipelineLayout getPipelineLayoutHandle() const;
+				VkPipeline getPipelineHandle() const;
+				VkDescriptorSetLayout getDescriptorSetLayout() const;
 
 			private:
 				RenderPass _renderPass;

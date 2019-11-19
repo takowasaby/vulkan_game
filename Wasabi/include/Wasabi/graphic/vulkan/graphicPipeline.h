@@ -11,8 +11,12 @@ namespace wsb {
 		namespace vulkan {
 			class GraphicPipeline {
 			public:
-				GraphicPipeline(const LogicalDevice& device, const SwapChain& swapChain, const RenderPass& renderPass, VkDescriptorSetLayout descriptorSetLayout);
+				GraphicPipeline(const LogicalDevice& device, const SwapChain& swapChain, const RenderPass& renderPass);
 				~GraphicPipeline();
+
+				VkPipelineLayout getPipelineLayoutHandle() const;
+				VkPipeline getPipelineHandle() const;
+				VkDescriptorSetLayout getDescriptorSetLayout() const;
 
 			private:
 				VkShaderModule createShaderModule(VkDevice device, const std::string& filename);
@@ -21,6 +25,7 @@ namespace wsb {
 				VkDevice _device;
 				VkPipelineLayout _pipelineLayout;
 				VkPipeline _graphicsPipeline;
+				VkDescriptorSetLayout _descriptorSetLayout;
 
 			};
 		}

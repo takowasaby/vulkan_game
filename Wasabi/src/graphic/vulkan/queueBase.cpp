@@ -14,12 +14,12 @@ namespace wsb::graphic::vulkan {
 		return _queue;
 	}
 
-	void QueueBase::submit(uint32_t submitCount, const VkSubmitInfo* pSubmits, VkFence fence)
+	void QueueBase::submit(uint32_t submitCount, const VkSubmitInfo* pSubmits, VkFence fence) const
 	{
 		vkQueueSubmit(_queue, submitCount, pSubmits, fence);
 	}
 
-	void QueueBase::waitIdle()
+	void QueueBase::waitIdle() const
 	{
 		vkQueueWaitIdle(_queue);
 	}

@@ -16,8 +16,8 @@ namespace wsb {
 				virtual ~QueueBase() = default;
 
 				VkQueue getQueueHandle() const;
-				void submit(uint32_t submitCount, const VkSubmitInfo* pSubmits, VkFence fence);
-				void waitIdle();
+				void submit(uint32_t submitCount, const VkSubmitInfo* pSubmits, VkFence fence) const;
+				void waitIdle() const;
 
 			private:
 				VkQueue _queue;

@@ -4,12 +4,13 @@
 #include <Wasabi/graphic/vulkan/graphicPipeline.h>
 
 #include <Wasabi/graphic/vulkan/vertex.h>
+#include <Wasabi/graphic/vulkan/bufferMemoryArea.h>
 
 #include <fstream>
 #include <string>
 
 namespace wsb::graphic::vulkan {
-	GraphicPipeline::GraphicPipeline(const LogicalDevice& device, const SwapChain& swapChain, const RenderPass& renderPass, VkDescriptorSetLayout descriptorSetLayout)
+	GraphicPipeline::GraphicPipeline(const LogicalDevice& device, const SwapChain& swapChain, const RenderPass& renderPass)
 		: _device(device.getDeviceHandle())
 	{
 		VkShaderModule vertShaderModule = createShaderModule(_device, "C:/Users/tomio/Desktop/VulkanTest/VulkanTest/shaders/out/vert.spv");
@@ -17,6 +18,8 @@ namespace wsb::graphic::vulkan {
 
 		auto bindingDescription = getVertexBindingDescription();
 		auto attributeDescriptions = getVertexAttributeDescriptions();
+
+		_descriptorSetLayout = BufferMemoryArea::createDescriptorSetLayout(device);
 
 		VkPipelineShaderStageCreateInfo vertShaderStageInfo = {};
 		vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -122,8 +125,8 @@ namespace wsb::graphic::vulkan {
 
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
 		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutInfo.setLayoutCount = 0;
-		pipelineLayoutInfo.pSetLayouts = nullptr;
+		pipelineLayoutInfo.setLayoutCount = 1;
+		pipelineLayoutInfo.pSetLayouts = &_descriptorSetLayout;
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
 		pipelineLayoutInfo.pPushConstantRanges = nullptr;
 
@@ -163,8 +166,24 @@ namespace wsb::graphic::vulkan {
 
 	GraphicPipeline::~GraphicPipeline()
 	{
+		vkDestroyDescriptorSetLayout(_device, _descriptorSetLayout, nullptr);
 		vkDestroyPipeline(_device, _graphicsPipeline, nullptr);
 		vkDestroyPipelineLayout(_device, _pipelineLayout, nullptr);
+	}
+
+	VkPipelineLayout GraphicPipeline::getPipelineLayoutHandle() const
+	{
+		return _pipelineLayout;
+	}
+
+	VkPipeline GraphicPipeline::getPipelineHandle() const
+	{
+		return _graphicsPipeline;
+	}
+
+	VkDescriptorSetLayout GraphicPipeline::getDescriptorSetLayout() const
+	{
+		return _descriptorSetLayout;
 	}
 
 	VkShaderModule GraphicPipeline::createShaderModule(VkDevice device, const std::string& filename) {

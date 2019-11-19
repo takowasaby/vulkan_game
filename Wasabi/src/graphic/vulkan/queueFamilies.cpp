@@ -30,12 +30,12 @@ namespace wsb::graphic::vulkan {
 		return _presentQueue.getQueueHandle();
 	}
 
-	void QueueFamilies::submitGraphicQueue(uint32_t submitCount, const VkSubmitInfo* pSubmits, VkFence fence)
+	void QueueFamilies::submitGraphicQueue(uint32_t submitCount, const VkSubmitInfo* pSubmits, VkFence fence) const
 	{
 		_graphicQueue.submit(submitCount, pSubmits, fence);
 	}
 
-	void QueueFamilies::waitGraphicQueueIdle()
+	void QueueFamilies::waitGraphicQueueIdle() const
 	{
 		_graphicQueue.waitIdle();
 	}

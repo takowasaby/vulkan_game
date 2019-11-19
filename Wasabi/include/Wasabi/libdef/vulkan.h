@@ -75,6 +75,12 @@ using VkPipelineLayout = VkPipelineLayout_T *;
 struct VkPipeline_T;
 using VkPipeline = VkPipeline_T *;
 
+struct VkDeviceMemory_T;
+using VkDeviceMemory = VkDeviceMemory_T *;
+
+struct VkBuffer_T;
+using VkBuffer = VkBuffer_T *;
+
 struct VkExtent2D;
 struct VkPresentInfoKHR;
 struct VkSurfaceCapabilitiesKHR;
@@ -84,6 +90,7 @@ struct VkDeviceQueueCreateInfo;
 struct VkSubmitInfo;
 struct VkVertexInputBindingDescription;
 struct VkVertexInputAttributeDescription;
+struct VkPhysicalDeviceMemoryProperties;
 
 enum VkFormat;
 enum VkPresentModeKHR;
@@ -91,3 +98,6 @@ enum VkPresentModeKHR;
 using VkFlags =  uint32_t;
 using VkMemoryPropertyFlags = VkFlags;
 using VkQueueFlags = VkFlags;
+using VkBufferUsageFlags = VkFlags;
+
+using VkDeviceSize = uint64_t;

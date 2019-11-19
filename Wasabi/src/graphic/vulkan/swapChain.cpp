@@ -115,7 +115,7 @@ namespace wsb::graphic::vulkan {
 		return static_cast<uint32_t>(_swapChainImages.size());
 	}
 
-	std::vector<VkFramebuffer> vulkan::SwapChain::createFrameBuffer(VkRenderPass renderPass)
+	std::vector<VkFramebuffer> vulkan::SwapChain::createFrameBuffer(VkRenderPass renderPass) const
 	{
 		std::vector<VkFramebuffer> swapChainFramebuffers(_swapChainImageViews.size());
 
