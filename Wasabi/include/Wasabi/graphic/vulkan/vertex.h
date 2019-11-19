@@ -1,4 +1,5 @@
 #pragma once
+#include <glm/glm.hpp>
 
 #include <Wasabi/libdef/vulkan.h>
 
@@ -7,7 +8,10 @@
 namespace wsb {
 	namespace graphic {
 		namespace vulkan {
-			struct Vertex;
+			struct Vertex {
+				alignas(8) glm::vec2 pos;
+				alignas(16) glm::vec3 color;
+			};
 
 			VkVertexInputBindingDescription getVertexBindingDescription();
 			std::array<VkVertexInputAttributeDescription, 2> getVertexAttributeDescriptions();

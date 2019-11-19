@@ -1,17 +1,11 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
 
 #include <Wasabi/graphic/vulkan/vertex.h>
 
 #include <cstddef>
 
 namespace wsb::graphic::vulkan {
-	struct Vertex {
-		alignas(8) glm::vec3 pos;
-		alignas(16) glm::vec4 color;
-	};
-
 	VkVertexInputBindingDescription getVertexBindingDescription() {
 		VkVertexInputBindingDescription bindingDescription = {};
 		bindingDescription.binding = 0;

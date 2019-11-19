@@ -33,4 +33,18 @@ namespace wsb::window::glfw {
 		glfwPollEvents();
 		return true;
 	}
+
+	int Window::getWindowWidth()
+	{
+		int width, _;
+		glfwGetWindowSize(_window, &width, &_);
+		return width;
+	}
+
+	int Window::getWindowHeight()
+	{
+		int _, height;
+		glfwGetWindowSize(_window, &_, &height);
+		return height;
+	}
 }

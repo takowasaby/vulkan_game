@@ -15,6 +15,9 @@ namespace wsb {
 				GLFWwindow* getWindowHandle();
 				bool continueMainLoop();
 
+				int getWindowWidth();
+				int getWindowHeight();
+
 			private:
 				GLFWwindow* _window;
 
