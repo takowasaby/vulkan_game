@@ -33,7 +33,7 @@ namespace wsb::graphic::vulkan {
 		: _device(device.getDeviceHandle())
 		, _commandPool(device, indices)
 		, _transientCommandPool(device, indices)
-		, _descriptorPool(device, swapChain.getImageSize())
+		, _descriptorPool(std::make_unique<DescriptorPool>(device, swapChain.getImageSize()))
 		, _swapChainFramebuffers(render.createFrameBufferFromSwapChain(swapChain))
 		, _deviceMemoryProperity(std::make_unique<VkPhysicalDeviceMemoryProperties>(physicalDevice.getPhysicalDeviceMemoryProperties()))
 	{
@@ -57,11 +57,45 @@ namespace wsb::graphic::vulkan {
 		}
 	}
 
-	void BufferMemoryArea::CreateBuffersForRendering(const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices, const SwapChain& swapChain, const GraphicRender& render)
+	void BufferMemoryArea::createBuffersForRendering(const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices, const SwapChain& swapChain, const GraphicRender& render)
 	{
 		createVertexBuffer(queueFamilies, vertices);
 		createIndexBuffer(queueFamilies, indices);
 		createUniformBuffers(swapChain);
+		createDescriptorSets(swapChain, render);
+		createCommandBuffers(indices.size(), swapChain, render);
+		indicisSizeCache = indices.size();
+	}
+
+	void BufferMemoryArea::updateUniformBuffer(uint32_t currentImage, const UniformBufferObject& ubo)
+	{
+		void* data;
+		vkMapMemory(_device, _uniformBufferMemories[currentImage], 0, sizeof(ubo), 0, &data);
+		std::memcpy(data, &ubo, sizeof(ubo));
+		vkUnmapMemory(_device, _uniformBufferMemories[currentImage]);
+	}
+
+	VkCommandBuffer BufferMemoryArea::getCommandBufferHandle(uint32_t imageIndex) const
+	{
+		return _commandBuffers[imageIndex];
+	}
+
+	void BufferMemoryArea::updateSwapChainInfo(const PhysicalDevice& physicalDevice, const GraphicRender& render, const LogicalDevice& device, QueueFamilies::QueueFamilyIndices indices, const SwapChain& swapChain)
+	{
+		_descriptorPool.reset();
+		for (size_t i = 0; i < _swapChainFramebuffers.size(); i++) {
+			vkDestroyFramebuffer(_device, _swapChainFramebuffers[i], nullptr);
+		}
+		for (size_t i = 0; i < _uniformBuffers.size(); i++) {
+			vkDestroyBuffer(_device, _uniformBuffers[i], nullptr);
+			vkFreeMemory(_device, _uniformBufferMemories[i], nullptr);
+		}
+
+		_swapChainFramebuffers = render.createFrameBufferFromSwapChain(swapChain);
+		_descriptorPool = std::make_unique<DescriptorPool>(device, swapChain.getImageSize());
+		createUniformBuffers(swapChain);
+		createDescriptorSets(swapChain, render);
+		createCommandBuffers(indicisSizeCache, swapChain, render);
 	}
 
 	void BufferMemoryArea::createVertexBuffer(const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices) {
@@ -197,7 +231,7 @@ namespace wsb::graphic::vulkan {
 	}
 
 	void BufferMemoryArea::createDescriptorSets(const SwapChain& swapChain, const GraphicRender& render) {
-		_descriptorSets = _descriptorPool.allocDescriptorSets(static_cast<uint32_t>(swapChain.getImageSize()), render.getDescriptorSetLayout());
+		_descriptorSets = _descriptorPool->allocDescriptorSets(static_cast<uint32_t>(swapChain.getImageSize()), render.getDescriptorSetLayout());
 
 		for (size_t i = 0; i < _descriptorSets.size(); i++) {
 			VkDescriptorBufferInfo bufferInfo = {};
@@ -219,7 +253,7 @@ namespace wsb::graphic::vulkan {
 		}
 	}
 
-	void BufferMemoryArea::createCommandBuffers(const std::vector<uint16_t>& indices, const SwapChain& swapChain, const GraphicRender& render) {
+	void BufferMemoryArea::createCommandBuffers(size_t indicesSize, const SwapChain& swapChain, const GraphicRender& render) {
 		_commandBuffers = _commandPool.allocCommandBuffers(static_cast<uint32_t>(_swapChainFramebuffers.size()));
 
 		for (size_t i = 0; i < _commandBuffers.size(); i++) {
@@ -253,7 +287,7 @@ namespace wsb::graphic::vulkan {
 			vkCmdBindIndexBuffer(_commandBuffers[i], _indexBuffer, 0, VK_INDEX_TYPE_UINT16);
 
 			vkCmdBindDescriptorSets(_commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, render.getPipelineLayoutHandle(), 0, 1, &_descriptorSets[i], 0, nullptr);
-			vkCmdDrawIndexed(_commandBuffers[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
+			vkCmdDrawIndexed(_commandBuffers[i], static_cast<uint32_t>(indicesSize), 1, 0, 0, 0);
 			vkCmdEndRenderPass(_commandBuffers[i]);
 			if (vkEndCommandBuffer(_commandBuffers[i]) != VK_SUCCESS) {
 				throw std::runtime_error("failed to record command buffer!");

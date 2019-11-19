@@ -37,8 +37,12 @@ int main(int argc, char* argv[]) {
 	const std::vector<uint16_t> indices = {
 		0, 1, 2, 2, 3, 0
 	};
+
+	engine.createBuffers(vertices, indices);
 	
 	while (window.continueMainLoop()) {
 		auto uniform = nextunifor(window.getWindowWidth(), window.getWindowHeight());
+		engine.drawFrame(uniform);
 	}
+	engine.terminate();
 }

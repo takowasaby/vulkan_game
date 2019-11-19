@@ -10,7 +10,17 @@ namespace wsb {
 		namespace vulkan {
 			class GraphicEngine {
 			public:
+				static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
+
+			public:
 				GraphicEngine(GLFWwindow* targetWindow);
+
+				void createBuffers(const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices);
+				void drawFrame(const UniformBufferObject& ubo);
+				void terminate();
+
+				void frameBufferResize(GLFWwindow* window);
+
 			private:
 				Instance _instance;
 #ifdef _DEBUG
