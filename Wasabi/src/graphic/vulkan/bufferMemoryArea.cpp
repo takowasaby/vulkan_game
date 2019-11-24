@@ -67,6 +67,29 @@ namespace wsb::graphic::vulkan {
 		indicisSizeCache = indices.size();
 	}
 
+	void BufferMemoryArea::updateVertexBuffer(const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices)
+	{
+		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
+
+		VkBufferUsageFlags stagingBufferUsage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+		VkMemoryPropertyFlags stagingBufferProperties = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+
+
+		VkBuffer stagingBuffer;
+		VkDeviceMemory stagingBufferMemory;
+		createBuffer(bufferSize, stagingBufferUsage, stagingBufferProperties, stagingBuffer, stagingBufferMemory);
+
+		void* data;
+		vkMapMemory(_device, stagingBufferMemory, 0, bufferSize, 0, &data);
+		std::memcpy(data, vertices.data(), (size_t)bufferSize);
+		vkUnmapMemory(_device, stagingBufferMemory);
+
+		copyBuffer(queueFamilies, stagingBuffer, _vertexBuffer, bufferSize);
+
+		vkDestroyBuffer(_device, stagingBuffer, nullptr);
+		vkFreeMemory(_device, stagingBufferMemory, nullptr);
+	}
+
 	void BufferMemoryArea::updateUniformBuffer(uint32_t currentImage, const UniformBufferObject& ubo)
 	{
 		void* data;

@@ -34,6 +34,12 @@
     <Filter Include="include\libdef">
       <UniqueIdentifier>{61af83ec-b8b9-4811-b306-3ad80915cbad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\input">
+      <UniqueIdentifier>{c00b8f1d-9211-47ef-90e3-1a5dca5dc6bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\input">
+      <UniqueIdentifier>{05ef2af5-6003-473f-aab2-aeb74f477107}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Wasabi\window\glfw\window.h">
@@ -108,6 +114,9 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\uniformBufferObject.h">
       <Filter>include\graphic\vulkan</Filter>
     </ClInclude>
+    <ClInclude Include="include\Wasabi\input\mouse.h">
+      <Filter>include\input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\graphic\vulkan\graphicEngine.cpp">
@@ -175,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="src\graphic\vulkan\uniformBufferObject.cpp">
       <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\mouse.cpp">
+      <Filter>src\input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

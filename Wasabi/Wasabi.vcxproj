@@ -40,6 +40,7 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\transientCommandPool.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\uniformBufferObject.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\vertex.h" />
+    <ClInclude Include="include\Wasabi\input\mouse.h" />
     <ClInclude Include="include\Wasabi\libdef\glfw.h" />
     <ClInclude Include="include\Wasabi\libdef\vulkan.h" />
     <ClInclude Include="include\Wasabi\window\glfw\window.h" />
@@ -66,6 +67,7 @@
     <ClCompile Include="src\graphic\vulkan\transientCommandPool.cpp" />
     <ClCompile Include="src\graphic\vulkan\uniformBufferObject.cpp" />
     <ClCompile Include="src\graphic\vulkan\vertex.cpp" />
+    <ClCompile Include="src\input\mouse.cpp" />
     <ClCompile Include="src\window\glfw\window.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

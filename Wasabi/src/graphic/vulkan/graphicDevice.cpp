@@ -76,6 +76,11 @@ namespace wsb::graphic::vulkan {
 		_bufferMemoryArea.createBuffersForRendering(_queueFamilies, vertices, indices, *_swapChain, *_render);
 	}
 
+	void GraphicDevice::updateVertices(const std::vector<Vertex>& vertices)
+	{
+		_bufferMemoryArea.updateVertexBuffer(_queueFamilies, vertices);
+	}
+
 	void GraphicDevice::drawFrame(const UniformBufferObject& ubo)
 	{
 		vkWaitForFences(_logicalDevice.getDeviceHandle(), 1, &_inFlightFences[_currentFrame], VK_TRUE, UINT64_MAX);

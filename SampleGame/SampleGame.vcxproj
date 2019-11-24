@@ -26,6 +26,10 @@
       <Project>{8ed87c9e-7425-4700-9dc6-19016f48b2bf}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\src\shader.frag" />
+    <None Include="shaders\src\shader.vert" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{ECC72B5D-77BD-4345-964B-A15920B1A2C9}</ProjectGuid>

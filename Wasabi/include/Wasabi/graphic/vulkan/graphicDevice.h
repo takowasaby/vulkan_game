@@ -20,6 +20,7 @@ namespace wsb {
 				~GraphicDevice();
 
 				void createBuffers(const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices);
+				void updateVertices(const std::vector<Vertex>& vertices);
 				void drawFrame(const UniformBufferObject& ubo);
 				void terminate();
 

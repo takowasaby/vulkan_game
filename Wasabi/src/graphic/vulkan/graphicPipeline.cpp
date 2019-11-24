@@ -13,8 +13,8 @@ namespace wsb::graphic::vulkan {
 	GraphicPipeline::GraphicPipeline(const LogicalDevice& device, const SwapChain& swapChain, const RenderPass& renderPass)
 		: _device(device.getDeviceHandle())
 	{
-		VkShaderModule vertShaderModule = createShaderModule(_device, "C:/Users/tomio/Desktop/VulkanTest/VulkanTest/shaders/out/vert.spv");
-		VkShaderModule fragShaderModule = createShaderModule(_device, "C:/Users/tomio/Desktop/VulkanTest/VulkanTest/shaders/out/frag.spv");
+		VkShaderModule vertShaderModule = createShaderModule(_device, "shaders/out/vert.spv");
+		VkShaderModule fragShaderModule = createShaderModule(_device, "shaders/out/frag.spv");
 
 		auto bindingDescription = getVertexBindingDescription();
 		auto attributeDescriptions = getVertexAttributeDescriptions();

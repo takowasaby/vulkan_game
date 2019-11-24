@@ -28,6 +28,7 @@ namespace wsb {
 				~BufferMemoryArea();
 
 				void createBuffersForRendering(const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices, const SwapChain& swapChain, const GraphicRender& render);
+				void updateVertexBuffer(const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices);
 				void updateUniformBuffer(uint32_t currentImage, const UniformBufferObject& ubo);
 
 				VkCommandBuffer getCommandBufferHandle(uint32_t imageIndex) const;

@@ -4,10 +4,21 @@
     <Filter Include="src">
       <UniqueIdentifier>{ee9df0ba-467f-41d4-9c2b-218f47c31a0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{0f88309e-1522-44b4-8e14-780e757050b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\src\shader.frag">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shaders\src\shader.vert">
+      <Filter>shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -34,14 +34,14 @@ namespace wsb::window::glfw {
 		return true;
 	}
 
-	int Window::getWindowWidth()
+	int Window::getWindowWidth() const
 	{
 		int width, _;
 		glfwGetWindowSize(_window, &width, &_);
 		return width;
 	}
 
-	int Window::getWindowHeight()
+	int Window::getWindowHeight() const
 	{
 		int _, height;
 		glfwGetWindowSize(_window, &_, &height);

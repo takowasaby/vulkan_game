@@ -26,6 +26,10 @@ namespace wsb::graphic::vulkan {
 	{
 		_device.createBuffers(vertices, indices);
 	}
+	void GraphicEngine::updateVertices(const std::vector<Vertex>& vertices)
+	{
+		_device.updateVertices(vertices);
+	}
 	void GraphicEngine::drawFrame(const UniformBufferObject& ubo)
 	{
 		_device.drawFrame(ubo);
