@@ -15,7 +15,8 @@ namespace wsb::graphic::vulkan {
 		, _queueFamilies(_logicalDevice, QueueFamilies::findQueueFamilies(_physicalDevice.getPhysicalDeviceHandle(), surface))
 		, _swapChain(std::make_unique<SwapChain>(window, surface, _physicalDevice, _logicalDevice))
 		, _render(std::make_unique<GraphicRender>(_logicalDevice, *_swapChain))
-		, _bufferMemoryArea(_physicalDevice, *_render, _logicalDevice, QueueFamilies::findQueueFamilies(_physicalDevice.getPhysicalDeviceHandle(), surface), *_swapChain)
+		, _bufferMemoryArea(*_render, _logicalDevice, QueueFamilies::findQueueFamilies(_physicalDevice.getPhysicalDeviceHandle(), surface), *_swapChain)
+		, _textureImageLoader(_logicalDevice)
 	{
 		createSyncObjects();
 	}
@@ -73,12 +74,13 @@ namespace wsb::graphic::vulkan {
 
 	void GraphicDevice::createBuffers(const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices)
 	{
-		_bufferMemoryArea.createBuffersForRendering(_queueFamilies, vertices, indices, *_swapChain, *_render);
+		_textureImageLoader.createTextureImage(_physicalDevice, _queueFamilies, _bufferMemoryArea);
+		_bufferMemoryArea.createBuffersForRendering(_physicalDevice, _queueFamilies, vertices, indices, *_swapChain, *_render);
 	}
 
 	void GraphicDevice::updateVertices(const std::vector<Vertex>& vertices)
 	{
-		_bufferMemoryArea.updateVertexBuffer(_queueFamilies, vertices);
+		_bufferMemoryArea.updateVertexBuffer(_physicalDevice, _queueFamilies, vertices);
 	}
 
 	void GraphicDevice::drawFrame(const UniformBufferObject& ubo)
@@ -103,7 +105,7 @@ namespace wsb::graphic::vulkan {
 		}
 		_imagesInFlight[imageIndex] = _inFlightFences[_currentFrame];
 
-		_bufferMemoryArea.updateUniformBuffer(imageIndex, ubo);
+		_bufferMemoryArea.updateUniformBuffer(_physicalDevice, imageIndex, ubo);
 
 		VkSubmitInfo submitInfo = {};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;

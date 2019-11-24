@@ -15,7 +15,7 @@ namespace wsb {
 				PhysicalDevice(const Instance& instance, const Surface& surface, const std::vector<const char*>& deviceExtensions);
 
 				VkPhysicalDevice getPhysicalDeviceHandle() const;
-				VkPhysicalDeviceMemoryProperties getPhysicalDeviceMemoryProperties() const;
+				uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) const;
 			
 			private:
 				static bool isDeviceSuitable(VkPhysicalDevice device, const Surface& surface, const std::vector<const char*>& deviceExtensions);

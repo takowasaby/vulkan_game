@@ -28,6 +28,7 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\graphicPipeline.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\graphicQueue.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\graphicRender.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\iCommandPool.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\instance.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\logicalDevice.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\physicalDevice.h" />
@@ -37,6 +38,7 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\renderPass.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\surface.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\swapChain.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\textureImageLoader.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\transientCommandPool.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\uniformBufferObject.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\vertex.h" />
@@ -64,6 +66,7 @@
     <ClCompile Include="src\graphic\vulkan\renderPass.cpp" />
     <ClCompile Include="src\graphic\vulkan\surface.cpp" />
     <ClCompile Include="src\graphic\vulkan\swapChain.cpp" />
+    <ClCompile Include="src\graphic\vulkan\textureImageLoader.cpp" />
     <ClCompile Include="src\graphic\vulkan\transientCommandPool.cpp" />
     <ClCompile Include="src\graphic\vulkan\uniformBufferObject.cpp" />
     <ClCompile Include="src\graphic\vulkan\vertex.cpp" />
@@ -141,7 +144,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)include\;C:\VulkanSDK\1.1.126.0\Include\;$(SolutionDIr)libs\glm\include\;$(SolutionDIr)libs\glfw\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\;C:\VulkanSDK\1.1.126.0\Include\;$(SolutionDIr)libs\glm\include\;$(SolutionDIr)libs\glfw\include\;$(SolutionDIr)libs\stb\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -162,7 +165,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)include\;C:\VulkanSDK\1.1.126.0\Include\;$(SolutionDIr)libs\glm\include\;$(SolutionDIr)libs\glfw\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\;C:\VulkanSDK\1.1.126.0\Include\;$(SolutionDIr)libs\glm\include\;$(SolutionDIr)libs\glfw\include\;$(SolutionDIr)libs\stb\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -185,7 +188,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)include\;C:\VulkanSDK\1.1.126.0\Include\;$(SolutionDIr)libs\glm\include\;$(SolutionDIr)libs\glfw\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\;C:\VulkanSDK\1.1.126.0\Include\;$(SolutionDIr)libs\glm\include\;$(SolutionDIr)libs\glfw\include\;$(SolutionDIr)libs\stb\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -210,7 +213,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)include\;C:\VulkanSDK\1.1.126.0\Include\;$(SolutionDIr)libs\glm\include\;$(SolutionDIr)libs\glfw\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\;C:\VulkanSDK\1.1.126.0\Include\;$(SolutionDIr)libs\glm\include\;$(SolutionDIr)libs\glfw\include\;$(SolutionDIr)libs\stb\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>

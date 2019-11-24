@@ -22,6 +22,26 @@ namespace wsb::graphic::vulkan {
 		vkDestroyCommandPool(_device, _commandPool, nullptr);
 	}
 
+	VkCommandBuffer CommandPool::allocCommandBuffer()
+	{
+		VkCommandBufferAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+		allocInfo.commandPool = _commandPool;
+		allocInfo.commandBufferCount = 1;
+
+		VkCommandBuffer commandBuffer;
+		if (vkAllocateCommandBuffers(_device, &allocInfo, &commandBuffer) != VK_SUCCESS) {
+			throw std::runtime_error("failed to allocate command buffers!");
+		}
+		return commandBuffer;
+	}
+
+	void CommandPool::freeCommandBuffer(VkCommandBuffer commandBuffer)
+	{
+		vkFreeCommandBuffers(_device, _commandPool, 1, &commandBuffer);
+	}
+
 	std::vector<VkCommandBuffer> CommandPool::allocCommandBuffers(uint32_t allocSize)
 	{
 		std::vector<VkCommandBuffer> commandBuffers(allocSize);

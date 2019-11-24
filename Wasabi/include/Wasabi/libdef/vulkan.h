@@ -94,10 +94,13 @@ struct VkPhysicalDeviceMemoryProperties;
 
 enum VkFormat;
 enum VkPresentModeKHR;
+enum VkImageTiling;
+enum VkImageLayout;
 
 using VkFlags =  uint32_t;
 using VkMemoryPropertyFlags = VkFlags;
 using VkQueueFlags = VkFlags;
 using VkBufferUsageFlags = VkFlags;
+using VkImageUsageFlags = VkFlags;
 
 using VkDeviceSize = uint64_t;

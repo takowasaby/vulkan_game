@@ -39,4 +39,21 @@ namespace wsb::graphic::vulkan {
 	{
 		vkFreeCommandBuffers(_device, _transientCommandPool, 1, &commandBuffer);
 	}
+
+	std::vector<VkCommandBuffer> TransientCommandPool::allocCommandBuffers(uint32_t allocSize)
+	{
+		std::vector<VkCommandBuffer> commandBuffers(allocSize);
+
+		VkCommandBufferAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		allocInfo.commandPool = _transientCommandPool;
+		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+		allocInfo.commandBufferCount = static_cast<uint32_t>(commandBuffers.size());
+
+		if (vkAllocateCommandBuffers(_device, &allocInfo, commandBuffers.data()) != VK_SUCCESS) {
+			throw std::runtime_error("failed to allocate command buffers!");
+		}
+
+		return commandBuffers;
+	}
 }

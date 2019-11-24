@@ -29,13 +29,38 @@ namespace wsb::graphic::vulkan {
 		return descriptorSetLayout;
 	}
 
-	BufferMemoryArea::BufferMemoryArea(const PhysicalDevice& physicalDevice, const GraphicRender& render, const LogicalDevice& device, QueueFamilies::QueueFamilyIndices indices, const SwapChain& swapChain)
+	void BufferMemoryArea::createBuffer(const PhysicalDevice& physicalDevice, VkDevice device, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory) {
+		VkBufferCreateInfo bufferInfo = {};
+		bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		bufferInfo.size = size;
+		bufferInfo.usage = usage;
+		bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+		if (vkCreateBuffer(device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
+			throw std::runtime_error("failed to create vertex buffer!");
+		}
+
+		VkMemoryRequirements memRequirements;
+		vkGetBufferMemoryRequirements(device, buffer, &memRequirements);
+
+		VkMemoryAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		allocInfo.allocationSize = memRequirements.size;
+		allocInfo.memoryTypeIndex = physicalDevice.findMemoryType(memRequirements.memoryTypeBits, properties);
+
+		if (vkAllocateMemory(device, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
+			throw std::runtime_error("failed to allocate vertex buffer memory!");
+		}
+
+		vkBindBufferMemory(device, buffer, bufferMemory, 0);
+	}
+
+	BufferMemoryArea::BufferMemoryArea(const GraphicRender& render, const LogicalDevice& device, QueueFamilies::QueueFamilyIndices indices, const SwapChain& swapChain)
 		: _device(device.getDeviceHandle())
-		, _commandPool(device, indices)
-		, _transientCommandPool(device, indices)
+		, _commandPool(std::make_unique<CommandPool>(device, indices))
+		, _transientCommandPool(std::make_unique<TransientCommandPool>(device, indices))
 		, _descriptorPool(std::make_unique<DescriptorPool>(device, swapChain.getImageSize()))
 		, _swapChainFramebuffers(render.createFrameBufferFromSwapChain(swapChain))
-		, _deviceMemoryProperity(std::make_unique<VkPhysicalDeviceMemoryProperties>(physicalDevice.getPhysicalDeviceMemoryProperties()))
 	{
 	}
 
@@ -57,17 +82,17 @@ namespace wsb::graphic::vulkan {
 		}
 	}
 
-	void BufferMemoryArea::createBuffersForRendering(const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices, const SwapChain& swapChain, const GraphicRender& render)
+	void BufferMemoryArea::createBuffersForRendering(const PhysicalDevice& physicalDevice, const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices, const SwapChain& swapChain, const GraphicRender& render)
 	{
-		createVertexBuffer(queueFamilies, vertices);
-		createIndexBuffer(queueFamilies, indices);
-		createUniformBuffers(swapChain);
+		createVertexBuffer(physicalDevice, queueFamilies, vertices);
+		createIndexBuffer(physicalDevice, queueFamilies, indices);
+		createUniformBuffers(physicalDevice, swapChain);
 		createDescriptorSets(swapChain, render);
 		createCommandBuffers(indices.size(), swapChain, render);
 		indicisSizeCache = indices.size();
 	}
 
-	void BufferMemoryArea::updateVertexBuffer(const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices)
+	void BufferMemoryArea::updateVertexBuffer(const PhysicalDevice& physicalDevice, const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices)
 	{
 		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
 
@@ -77,7 +102,7 @@ namespace wsb::graphic::vulkan {
 
 		VkBuffer stagingBuffer;
 		VkDeviceMemory stagingBufferMemory;
-		createBuffer(bufferSize, stagingBufferUsage, stagingBufferProperties, stagingBuffer, stagingBufferMemory);
+		createBuffer(physicalDevice, _device, bufferSize, stagingBufferUsage, stagingBufferProperties, stagingBuffer, stagingBufferMemory);
 
 		void* data;
 		vkMapMemory(_device, stagingBufferMemory, 0, bufferSize, 0, &data);
@@ -90,7 +115,7 @@ namespace wsb::graphic::vulkan {
 		vkFreeMemory(_device, stagingBufferMemory, nullptr);
 	}
 
-	void BufferMemoryArea::updateUniformBuffer(uint32_t currentImage, const UniformBufferObject& ubo)
+	void BufferMemoryArea::updateUniformBuffer(const PhysicalDevice& physicalDevice, uint32_t currentImage, const UniformBufferObject& ubo)
 	{
 		void* data;
 		vkMapMemory(_device, _uniformBufferMemories[currentImage], 0, sizeof(ubo), 0, &data);
@@ -101,6 +126,16 @@ namespace wsb::graphic::vulkan {
 	VkCommandBuffer BufferMemoryArea::getCommandBufferHandle(uint32_t imageIndex) const
 	{
 		return _commandBuffers[imageIndex];
+	}
+
+	VkCommandBuffer BufferMemoryArea::beginSingleTimeCommands() const
+	{
+		return this->beginSingleTimeCommands(_transientCommandPool);
+	}
+
+	void BufferMemoryArea::endSingleTimeCommands(const QueueFamilies& queueFamilies, VkCommandBuffer commandBuffer) const
+	{
+		this->endSingleTimeCommands(_transientCommandPool, queueFamilies, commandBuffer);
 	}
 
 	void BufferMemoryArea::updateSwapChainInfo(const PhysicalDevice& physicalDevice, const GraphicRender& render, const LogicalDevice& device, QueueFamilies::QueueFamilyIndices indices, const SwapChain& swapChain)
@@ -116,12 +151,12 @@ namespace wsb::graphic::vulkan {
 
 		_swapChainFramebuffers = render.createFrameBufferFromSwapChain(swapChain);
 		_descriptorPool = std::make_unique<DescriptorPool>(device, swapChain.getImageSize());
-		createUniformBuffers(swapChain);
+		createUniformBuffers(physicalDevice, swapChain);
 		createDescriptorSets(swapChain, render);
 		createCommandBuffers(indicisSizeCache, swapChain, render);
 	}
 
-	void BufferMemoryArea::createVertexBuffer(const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices) {
+	void BufferMemoryArea::createVertexBuffer(const PhysicalDevice& physicalDevice, const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices) {
 		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
 
 		VkBufferUsageFlags stagingBufferUsage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
@@ -133,14 +168,14 @@ namespace wsb::graphic::vulkan {
 
 		VkBuffer stagingBuffer;
 		VkDeviceMemory stagingBufferMemory;
-		createBuffer(bufferSize, stagingBufferUsage, stagingBufferProperties, stagingBuffer, stagingBufferMemory);
+		createBuffer(physicalDevice, _device, bufferSize, stagingBufferUsage, stagingBufferProperties, stagingBuffer, stagingBufferMemory);
 
 		void* data;
 		vkMapMemory(_device, stagingBufferMemory, 0, bufferSize, 0, &data);
 		std::memcpy(data, vertices.data(), (size_t)bufferSize);
 		vkUnmapMemory(_device, stagingBufferMemory);
 
-		createBuffer(bufferSize, vertexBufferUsage, vertexBufferProperties, _vertexBuffer, _vertexBufferMemory);
+		createBuffer(physicalDevice, _device, bufferSize, vertexBufferUsage, vertexBufferProperties, _vertexBuffer, _vertexBufferMemory);
 
 		copyBuffer(queueFamilies, stagingBuffer, _vertexBuffer, bufferSize);
 
@@ -148,7 +183,7 @@ namespace wsb::graphic::vulkan {
 		vkFreeMemory(_device, stagingBufferMemory, nullptr);
 	}
 
-	void BufferMemoryArea::createIndexBuffer(const QueueFamilies& queueFamilies, std::vector<uint16_t> indices) {
+	void BufferMemoryArea::createIndexBuffer(const PhysicalDevice& physicalDevice, const QueueFamilies& queueFamilies, std::vector<uint16_t> indices) {
 		VkDeviceSize bufferSize = sizeof(indices[0]) * indices.size();
 
 		VkBufferUsageFlags stagingBufferUsage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
@@ -159,14 +194,14 @@ namespace wsb::graphic::vulkan {
 
 		VkBuffer stagingBuffer;
 		VkDeviceMemory stagingBufferMemory;
-		createBuffer(bufferSize, stagingBufferUsage, stagingBufferProperties, stagingBuffer, stagingBufferMemory);
+		createBuffer(physicalDevice, _device, bufferSize, stagingBufferUsage, stagingBufferProperties, stagingBuffer, stagingBufferMemory);
 
 		void* data;
 		vkMapMemory(_device, stagingBufferMemory, 0, bufferSize, 0, &data);
 		std::memcpy(data, indices.data(), (size_t)bufferSize);
 		vkUnmapMemory(_device, stagingBufferMemory);
 
-		createBuffer(bufferSize, indexBufferUsage, indexBufferProperties, _indexBuffer, _indexBufferMemory);
+		createBuffer(physicalDevice, _device, bufferSize, indexBufferUsage, indexBufferProperties, _indexBuffer, _indexBufferMemory);
 
 		copyBuffer(queueFamilies, stagingBuffer, _indexBuffer, bufferSize);
 
@@ -174,7 +209,7 @@ namespace wsb::graphic::vulkan {
 		vkFreeMemory(_device, stagingBufferMemory, nullptr);
 	}
 
-	void BufferMemoryArea::createUniformBuffers(const SwapChain& swapChain) {
+	void BufferMemoryArea::createUniformBuffers(const PhysicalDevice& physicalDevice, const SwapChain& swapChain) {
 		VkDeviceSize bufferSize = sizeof(UniformBufferObject);
 
 		_uniformBuffers.resize(swapChain.getImageSize());
@@ -182,6 +217,8 @@ namespace wsb::graphic::vulkan {
 
 		for (size_t i = 0; i < swapChain.getImageSize(); i++) {
 			createBuffer(
+				physicalDevice,
+				_device,
 				bufferSize,
 				VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
 				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
@@ -190,56 +227,20 @@ namespace wsb::graphic::vulkan {
 		}
 	}
 
-	void BufferMemoryArea::createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory) {
-		VkBufferCreateInfo bufferInfo = {};
-		bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		bufferInfo.size = size;
-		bufferInfo.usage = usage;
-		bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-
-		if (vkCreateBuffer(_device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
-			throw std::runtime_error("failed to create vertex buffer!");
-		}
-
-		VkMemoryRequirements memRequirements;
-		vkGetBufferMemoryRequirements(_device, buffer, &memRequirements);
-
-		VkMemoryAllocateInfo allocInfo = {};
-		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		allocInfo.allocationSize = memRequirements.size;
-		allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
-
-		if (vkAllocateMemory(_device, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
-			throw std::runtime_error("failed to allocate vertex buffer memory!");
-		}
-
-		vkBindBufferMemory(_device, buffer, bufferMemory, 0);
-	}
-
-	uint32_t BufferMemoryArea::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
-		for (uint32_t i = 0; i < _deviceMemoryProperity->memoryTypeCount; i++) {
-			if (typeFilter & (1 << i) && (_deviceMemoryProperity->memoryTypes[i].propertyFlags & properties) == properties) {
-				return i;
-			}
-		}
-
-		throw std::runtime_error("failed to find suitable memory type!");
-	}
-
-	void BufferMemoryArea::copyBuffer(const QueueFamilies& queueFamilies, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
-		VkCommandBuffer commandBuffer = _transientCommandPool.allocCommandBuffer();
+	VkCommandBuffer BufferMemoryArea::beginSingleTimeCommands(const std::unique_ptr<ICommandPool>& commandPool) const
+	{
+		VkCommandBuffer commandBuffer = commandPool->allocCommandBuffer();
 
 		VkCommandBufferBeginInfo beginInfo = {};
 		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 		vkBeginCommandBuffer(commandBuffer, &beginInfo);
 
-		VkBufferCopy copyRegion = {};
-		copyRegion.srcOffset = 0;
-		copyRegion.dstOffset = 0;
-		copyRegion.size = size;
-		vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
+		return commandBuffer;
+	}
 
+	void BufferMemoryArea::endSingleTimeCommands(const std::unique_ptr<ICommandPool>& commandPool, const QueueFamilies& queueFamilies, VkCommandBuffer commandBuffer) const
+	{
 		vkEndCommandBuffer(commandBuffer);
 
 		VkSubmitInfo submitInfo = {};
@@ -250,7 +251,19 @@ namespace wsb::graphic::vulkan {
 		queueFamilies.submitGraphicQueue(1, &submitInfo, VK_NULL_HANDLE);
 		queueFamilies.waitGraphicQueueIdle();
 
-		_transientCommandPool.freeCommandBuffer(commandBuffer);
+		commandPool->freeCommandBuffer(commandBuffer);
+	}
+
+	void BufferMemoryArea::copyBuffer(const QueueFamilies& queueFamilies, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
+		VkCommandBuffer commandBuffer = beginSingleTimeCommands(_transientCommandPool);
+
+		VkBufferCopy copyRegion = {};
+		copyRegion.srcOffset = 0;
+		copyRegion.dstOffset = 0;
+		copyRegion.size = size;
+		vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
+
+		endSingleTimeCommands(_transientCommandPool, queueFamilies, commandBuffer);
 	}
 
 	void BufferMemoryArea::createDescriptorSets(const SwapChain& swapChain, const GraphicRender& render) {
@@ -277,7 +290,7 @@ namespace wsb::graphic::vulkan {
 	}
 
 	void BufferMemoryArea::createCommandBuffers(size_t indicesSize, const SwapChain& swapChain, const GraphicRender& render) {
-		_commandBuffers = _commandPool.allocCommandBuffers(static_cast<uint32_t>(_swapChainFramebuffers.size()));
+		_commandBuffers = _commandPool->allocCommandBuffers(static_cast<uint32_t>(_swapChainFramebuffers.size()));
 
 		for (size_t i = 0; i < _commandBuffers.size(); i++) {
 			VkCommandBufferBeginInfo beginInfo = {};

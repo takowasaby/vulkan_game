@@ -8,6 +8,7 @@
 #include <Wasabi/graphic/vulkan/swapChain.h>
 #include <Wasabi/graphic/vulkan/bufferMemoryArea.h>
 #include <Wasabi/graphic/vulkan/graphicRender.h>
+#include <Wasabi/graphic/vulkan/textureImageLoader.h>
 
 namespace wsb {
 	namespace graphic {
@@ -39,6 +40,7 @@ namespace wsb {
 				std::unique_ptr<SwapChain> _swapChain;
 				std::unique_ptr<GraphicRender> _render;
 				BufferMemoryArea _bufferMemoryArea;
+				TextureImageLoader _textureImageLoader;
 
 				std::vector<VkSemaphore> _imageAvailableSemaphores;
 				std::vector<VkSemaphore> _renderFinishedSemaphores;

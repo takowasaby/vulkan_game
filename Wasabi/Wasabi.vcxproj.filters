@@ -117,6 +117,12 @@
     <ClInclude Include="include\Wasabi\input\mouse.h">
       <Filter>include\input</Filter>
     </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\textureImageLoader.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\iCommandPool.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\graphic\vulkan\graphicEngine.cpp">
@@ -187,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="src\input\mouse.cpp">
       <Filter>src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\textureImageLoader.cpp">
+      <Filter>src\graphic\vulkan</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
