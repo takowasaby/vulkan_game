@@ -123,6 +123,9 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\iCommandPool.h">
       <Filter>include\graphic\vulkan</Filter>
     </ClInclude>
+    <ClInclude Include="include\Wasabi\graphic\vulkan\textureSampler.h">
+      <Filter>include\graphic\vulkan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\graphic\vulkan\graphicEngine.cpp">
@@ -195,6 +198,9 @@
       <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="src\graphic\vulkan\textureImageLoader.cpp">
+      <Filter>src\graphic\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\vulkan\textureSampler.cpp">
       <Filter>src\graphic\vulkan</Filter>
     </ClCompile>
   </ItemGroup>

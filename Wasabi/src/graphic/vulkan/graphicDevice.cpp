@@ -17,6 +17,7 @@ namespace wsb::graphic::vulkan {
 		, _render(std::make_unique<GraphicRender>(_logicalDevice, *_swapChain))
 		, _bufferMemoryArea(*_render, _logicalDevice, QueueFamilies::findQueueFamilies(_physicalDevice.getPhysicalDeviceHandle(), surface), *_swapChain)
 		, _textureImageLoader(_logicalDevice)
+		, _textureSampler(_logicalDevice)
 	{
 		createSyncObjects();
 	}

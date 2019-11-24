@@ -81,6 +81,9 @@ using VkDeviceMemory = VkDeviceMemory_T *;
 struct VkBuffer_T;
 using VkBuffer = VkBuffer_T *;
 
+struct VkSampler_T;
+using VkSampler = VkSampler_T *;
+
 struct VkExtent2D;
 struct VkPresentInfoKHR;
 struct VkSurfaceCapabilitiesKHR;

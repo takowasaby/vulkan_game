@@ -39,6 +39,7 @@
     <ClInclude Include="include\Wasabi\graphic\vulkan\surface.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\swapChain.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\textureImageLoader.h" />
+    <ClInclude Include="include\Wasabi\graphic\vulkan\textureSampler.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\transientCommandPool.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\uniformBufferObject.h" />
     <ClInclude Include="include\Wasabi\graphic\vulkan\vertex.h" />
@@ -67,6 +68,7 @@
     <ClCompile Include="src\graphic\vulkan\surface.cpp" />
     <ClCompile Include="src\graphic\vulkan\swapChain.cpp" />
     <ClCompile Include="src\graphic\vulkan\textureImageLoader.cpp" />
+    <ClCompile Include="src\graphic\vulkan\textureSampler.cpp" />
     <ClCompile Include="src\graphic\vulkan\transientCommandPool.cpp" />
     <ClCompile Include="src\graphic\vulkan\uniformBufferObject.cpp" />
     <ClCompile Include="src\graphic\vulkan\vertex.cpp" />
