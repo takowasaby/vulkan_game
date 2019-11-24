@@ -144,16 +144,18 @@ public:
 		, _x2(x2)
 		, _y2(y2)
 		, _isInCollision(false)
+		, _isActive(true)
 	{}
-	Square(float x1, float y1, float x2, float y2, bool isInCollision)
+	Square(float x1, float y1, float x2, float y2, bool isInCollision, bool isActive)
 		: _x1(x1)
 		, _y1(y1)
 		, _x2(x2)
 		, _y2(y2)
 		, _isInCollision(isInCollision)
+		, _isActive(isActive)
 	{}
 	Square move(float x, float y) {
-		return Square(_x1 + x, _y1 + y, _x2 + x, _y2 + y, _isInCollision);
+		return Square(_x1 + x, _y1 + y, _x2 + x, _y2 + y, _isInCollision, _isActive);
 	}
 	float getLeft() const {
 		return _x1;
@@ -168,7 +170,8 @@ public:
 			_y1,
 			_x2 + diff,
 			_y2,
-			_isInCollision
+			_isInCollision, 
+			_isActive
 		);
 	}
 	Square setRight(float right) {
@@ -178,17 +181,29 @@ public:
 			_y1,
 			_x2 + diff,
 			_y2,
-			_isInCollision
+			_isInCollision, 
+			_isActive
 		);
 	}
 
 	std::vector<graphic::vulkan::Vertex> vertices() const override {
-		std::vector<graphic::vulkan::Vertex> vertices = {
-			{{_x1, _y1}, {1.0f, 0.0f, 0.0f}},
-			{{_x2, _y1}, {0.0f, 1.0f, 0.0f}},
-			{{_x2, _y2}, {0.0f, 0.0f, 1.0f}},
-			{{_x1, _y2}, {1.0f, 1.0f, 1.0f}}
-		};
+		std::vector<graphic::vulkan::Vertex> vertices;
+		if (_isActive) {
+			vertices = {
+				{{_x1, _y1}, {1.0f, 0.0f, 0.0f, 1.0f}},
+				{{_x2, _y1}, {0.0f, 1.0f, 0.0f, 1.0f}},
+				{{_x2, _y2}, {0.0f, 0.0f, 1.0f, 1.0f}},
+				{{_x1, _y2}, {1.0f, 1.0f, 1.0f, 1.0f}}
+			};
+		}
+		else {
+			vertices = {
+				{{_x1, _y1}, {1.0f, 0.0f, 0.0f, 0.0f}},
+				{{_x2, _y1}, {0.0f, 1.0f, 0.0f, 0.0f}},
+				{{_x2, _y2}, {0.0f, 0.0f, 1.0f, 0.0f}},
+				{{_x1, _y2}, {1.0f, 1.0f, 1.0f, 0.0f}}
+			};
+		}
 		return vertices;
 	}
 	std::vector<uint16_t> indices(uint16_t min = 0) const override {
@@ -200,21 +215,48 @@ public:
 		}
 		return indices;
 	}
-	SquareCillider collider() const {
-		return SquareCillider(_x1, _y1, _x2, _y2);
+	std::optional<SquareCillider> collider() const {
+		std::optional<SquareCillider> collider;
+		if (_isActive) collider = SquareCillider(_x1, _y1, _x2, _y2);
+		return collider;
 	}
 	bool isInCollision() const {
 		return _isInCollision;
 	}
-	void intoCollision() {
-		_isInCollision = true;
+	Square intoCollision() {
+		return Square(
+			_x1,
+			_y1,
+			_x2,
+			_y2,
+			true, 
+			_isActive
+		);
 	}
-	void outFromCollision() {
-		_isInCollision = false;
+	Square outFromCollision() {
+		return Square(
+			_x1,
+			_y1,
+			_x2,
+			_y2,
+			false, 
+			_isActive
+		);
+	}
+	Square destroy() {
+		return Square(
+			_x1,
+			_y1,
+			_x2,
+			_y2,
+			_isInCollision,
+			false
+		);
 	}
 private:
 	float _x1, _y1, _x2, _y2;
 	bool _isInCollision;
+	bool _isActive;
 };
 
 class Circle : public IShape {
@@ -230,13 +272,13 @@ public:
 	std::vector<graphic::vulkan::Vertex> vertices() const override {
 		std::vector<graphic::vulkan::Vertex> vertices;
 
-		vertices.push_back({ {_cx, _cy}, {1.0f, 1.0f, 1.0f} });
+		vertices.push_back({ {_cx, _cy}, {1.0f, 1.0f, 1.0f, 1.0f} });
 		for (int i = 0; i < 8; i++) {
 			float x = _cx + _radius * cosf(0.25 * i * M_PI);
 			float y = _cy + _radius * sinf(0.25 * i * M_PI);
 			if (abs(x) < 0.001f) x = 0.0f;
 			if (abs(y) < 0.001f) y = 0.0f;
-			vertices.push_back({ {x, y}, {i / 9.0f, i / 9.0f, i / 9.0f} });
+			vertices.push_back({ {x, y}, {i / 9.0f, i / 9.0f, i / 9.0f, 1.0f} });
 		}
 		return vertices;
 	}
@@ -260,7 +302,7 @@ private:
 class Player {
 public:
 	Player()
-		: _body(std::make_shared<Square>(-0.2f, 0.95f, 0.2f, 1.0f))
+		: _body(std::make_shared<Square>(-0.25f, 0.95f, 0.25f, 1.0f))
 	{}
 	void update(const wsb::window::glfw::Window& window, const wsb::input::Mouse& mouse) {
 		*_body = _body->move(-(mouse.getMousePosX() / window.getWindowWidth() - 0.5) / 10, 0);
@@ -289,9 +331,10 @@ public:
 	void update() {
 
 	}
-	static Block createBlock(float x, float y, std::vector<std::shared_ptr<IShape>>& renderShapes) {
+	static Block createBlock(float x, float y, std::vector<std::shared_ptr<IShape>>& renderShapes, std::vector<std::shared_ptr<Square>>& blocks) {
 		auto block = Block(x, y);
 		renderShapes.push_back(block._body);
+		blocks.push_back(block._body);
 		return block;
 	}
 private:
@@ -305,13 +348,17 @@ public:
 		, _vx(0.02f)
 		, _vy(-0.02f)
 	{}
-	void update(std::vector<std::shared_ptr<Square>>& squares) {
+	void update(std::vector<std::shared_ptr<Square>>& squares, std::vector<std::shared_ptr<Square>>& blocks) {
 		*_body = _body->move(_vx, _vy);
 
 		for (const auto& square : squares) {
-			int result = CollisionDetectioner::CollidingDirection(square->collider(), _body->collider());
+			auto squareCollider = square->collider();
+			if (!squareCollider.has_value()) {
+				continue;
+			}
+			int result = CollisionDetectioner::CollidingDirection(squareCollider.value(), _body->collider());
 			if (!result && square->isInCollision()) {
-				square->outFromCollision();
+				*square = square->outFromCollision();
 				continue;
 			}
 			if (!result) {
@@ -332,7 +379,38 @@ public:
 			else if (result & Direction::bottom) {
 				_vy = -_vy;
 			}
-			square->intoCollision();
+			*square = square->intoCollision();
+		}
+
+		for (const auto& block : blocks) {
+			auto squareCollider = block->collider();
+			if (!squareCollider.has_value()) {
+				continue;
+			}
+			int result = CollisionDetectioner::CollidingDirection(squareCollider.value(), _body->collider());
+			if (!result && block->isInCollision()) {
+				*block = block->outFromCollision();
+				continue;
+			}
+			if (!result) {
+				continue;
+			}
+			if (result && block->isInCollision()) {
+				continue;
+			}
+			if (result & Direction::left) {
+				_vx = -_vx;
+			}
+			else if (result & Direction::right) {
+				_vx = -_vx;
+			}
+			if (result & Direction::top) {
+				_vy = -_vy;
+			}
+			else if (result & Direction::bottom) {
+				_vy = -_vy;
+			}
+			*block = block->destroy();
 		}
 	}
 	static Ball createBall(std::vector<std::shared_ptr<IShape>>& renderShapes) {
@@ -389,12 +467,13 @@ int main(int argc, char* argv[]) {
 
 	std::vector<std::shared_ptr<IShape>> shapes;
 	std::vector<std::shared_ptr<Square>> squares;
+	std::vector<std::shared_ptr<Square>> blocks;
 
 	Player player = Player::createPlayer(shapes, squares);
-	std::vector<Block> blocks;
+	std::vector<Block> blockInstances;
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 5; j++) {
-			blocks.push_back(Block::createBlock(-0.6f + 0.3f * i, -0.8f + 0.2f * j, shapes));
+			blockInstances.push_back(Block::createBlock(-0.6f + 0.3f * i, -0.8f + 0.2f * j, shapes, blocks));
 		}
 	}
 	Ball ball = Ball::createBall(shapes);
@@ -419,7 +498,7 @@ int main(int argc, char* argv[]) {
 		auto uniform = nextunifor(window.getWindowWidth(), window.getWindowHeight());
 
 		player.update(window, mouse);
-		ball.update(squares);
+		ball.update(squares, blocks);
 
 		allVertices.clear();
 

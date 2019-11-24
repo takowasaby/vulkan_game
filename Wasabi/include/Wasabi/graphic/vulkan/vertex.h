@@ -10,7 +10,7 @@ namespace wsb {
 		namespace vulkan {
 			struct Vertex {
 				alignas(8) glm::vec2 pos;
-				alignas(16) glm::vec3 color;
+				alignas(16) glm::vec4 color;
 			};
 
 			VkVertexInputBindingDescription getVertexBindingDescription();
