@@ -3,18 +3,22 @@
 
 #include <Wasabi/graphic/vulkan/descriptorPool.h>
 
+#include <array>
+
 namespace wsb::graphic::vulkan {
 	DescriptorPool::DescriptorPool(const LogicalDevice& device, uint32_t descriptorSize)
 		: _device(device.getDeviceHandle())
 	{
-		VkDescriptorPoolSize poolSize = {};
-		poolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		poolSize.descriptorCount = descriptorSize;
+		std::array<VkDescriptorPoolSize, 2> poolSizes = {};
+		poolSizes[1].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		poolSizes[1].descriptorCount = descriptorSize;
+		poolSizes[1].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		poolSizes[1].descriptorCount = descriptorSize;
 
 		VkDescriptorPoolCreateInfo poolInfo = {};
 		poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-		poolInfo.poolSizeCount = 1;
-		poolInfo.pPoolSizes = &poolSize;
+		poolInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
+		poolInfo.pPoolSizes = poolSizes.data();
 		poolInfo.maxSets = descriptorSize;
 
 		if (vkCreateDescriptorPool(_device, &poolInfo, nullptr, &_descriptorPool) != VK_SUCCESS) {
