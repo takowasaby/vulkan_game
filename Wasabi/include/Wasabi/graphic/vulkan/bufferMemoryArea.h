@@ -12,6 +12,9 @@
 #include <Wasabi/graphic/vulkan/vertex.h>
 #include <Wasabi/graphic/vulkan/uniformBufferObject.h>
 
+#include <Wasabi/graphic/vulkan/textureSampler.h>
+#include <Wasabi/graphic/vulkan/textureImageLoader.h>
+
 #include <vector>
 #include <memory>
 #include <cstdint>
@@ -19,6 +22,8 @@
 namespace wsb {
 	namespace graphic {
 		namespace vulkan {
+			class TextureImageLoader;
+
 			class BufferMemoryArea {
 			public:
 				static VkDescriptorSetLayout createDescriptorSetLayout(const LogicalDevice& device);
@@ -28,7 +33,7 @@ namespace wsb {
 				BufferMemoryArea(const GraphicRender& render, const LogicalDevice& device, QueueFamilies::QueueFamilyIndices indices, const SwapChain& swapChain);
 				~BufferMemoryArea();
 
-				void createBuffersForRendering(const PhysicalDevice& physicalDevice, const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices, const SwapChain& swapChain, const GraphicRender& render);
+				void createBuffersForRendering(const PhysicalDevice& physicalDevice, const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices, const SwapChain& swapChain, const GraphicRender& render, const TextureImageLoader& imageLoader, const TextureSampler& sampler);
 				void updateVertexBuffer(const PhysicalDevice& physicalDevice, const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices);
 				void updateUniformBuffer(const PhysicalDevice& physicalDevice, uint32_t currentImage, const UniformBufferObject& ubo);
 
@@ -37,7 +42,7 @@ namespace wsb {
 				VkCommandBuffer beginSingleTimeCommands() const;
 				void endSingleTimeCommands(const QueueFamilies& queueFamilies, VkCommandBuffer commandBuffer) const;
 
-				void updateSwapChainInfo(const PhysicalDevice& physicalDevice, const GraphicRender& render, const LogicalDevice& device, QueueFamilies::QueueFamilyIndices indices, const SwapChain& swapChain);
+				void updateSwapChainInfo(const PhysicalDevice& physicalDevice, const GraphicRender& render, const LogicalDevice& device, QueueFamilies::QueueFamilyIndices indices, const SwapChain& swapChain, const TextureImageLoader& imageLoader, const TextureSampler& sampler);
 
 			private:
 				void createVertexBuffer(const PhysicalDevice& physicalDevice, const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices);
@@ -48,7 +53,7 @@ namespace wsb {
 				void endSingleTimeCommands(const std::unique_ptr<ICommandPool>& commandPool, const QueueFamilies& queueFamilies, VkCommandBuffer commandBuffer) const;
 				void copyBuffer(const QueueFamilies& queueFamilies, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 
-				void createDescriptorSets(const SwapChain& swapChain, const GraphicRender& render);
+				void createDescriptorSets(const SwapChain& swapChain, const GraphicRender& render, const TextureImageLoader& imageLoader, const TextureSampler& sampler);
 				void createCommandBuffers(size_t indicesSize, const SwapChain& swapChain, const GraphicRender& render);
 
 			private:

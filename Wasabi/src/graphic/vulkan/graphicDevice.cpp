@@ -20,6 +20,7 @@ namespace wsb::graphic::vulkan {
 		, _textureSampler(_logicalDevice)
 	{
 		createSyncObjects();
+		_textureImageLoader.createTextureImage(_physicalDevice, _queueFamilies, _bufferMemoryArea);
 	}
 
 	GraphicDevice::~GraphicDevice()
@@ -70,13 +71,12 @@ namespace wsb::graphic::vulkan {
 		_render.reset();
 		_render = std::make_unique<GraphicRender>(_logicalDevice, *_swapChain);
 
-		_bufferMemoryArea.updateSwapChainInfo(_physicalDevice, *_render, _logicalDevice, QueueFamilies::findQueueFamilies(_physicalDevice.getPhysicalDeviceHandle(), surface), *_swapChain);
+		_bufferMemoryArea.updateSwapChainInfo(_physicalDevice, *_render, _logicalDevice, QueueFamilies::findQueueFamilies(_physicalDevice.getPhysicalDeviceHandle(), surface), *_swapChain, _textureImageLoader, _textureSampler);
 	}
 
 	void GraphicDevice::createBuffers(const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices)
 	{
-		_textureImageLoader.createTextureImage(_physicalDevice, _queueFamilies, _bufferMemoryArea);
-		_bufferMemoryArea.createBuffersForRendering(_physicalDevice, _queueFamilies, vertices, indices, *_swapChain, *_render);
+		_bufferMemoryArea.createBuffersForRendering(_physicalDevice, _queueFamilies, vertices, indices, *_swapChain, *_render, _textureImageLoader, _textureSampler);
 	}
 
 	void GraphicDevice::updateVertices(const std::vector<Vertex>& vertices)

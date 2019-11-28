@@ -12,6 +12,8 @@ namespace wsb {
 				TextureSampler(const LogicalDevice& device);
 				~TextureSampler();
 
+				VkSampler getSamplerHandle() const;
+
 			private:
 				VkDevice _device;
 				VkSampler _sampler;

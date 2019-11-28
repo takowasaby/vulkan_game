@@ -54,6 +54,8 @@ namespace wsb::graphic::vulkan {
 	
 		vkDestroyBuffer(_device, stagingBuffer, nullptr);
 		vkFreeMemory(_device, stagingBufferMemory, nullptr);
+
+		createTextureImageView();
 	}
 
 	void TextureImageLoader::createTextureImageView()
@@ -79,6 +81,11 @@ namespace wsb::graphic::vulkan {
 		if (vkCreateImageView(_device, &createInfo, nullptr, &_textureImageView) != VK_SUCCESS) {
 			throw std::runtime_error("failed to create image views!");
 		}
+	}
+
+	VkImageView TextureImageLoader::getTextureHandle() const
+	{
+		return _textureImageView;
 	}
 
 	void TextureImageLoader::createImage(const PhysicalDevice& physicalDevice, VkDevice device, uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properities, VkImage& image, VkDeviceMemory& imageMemory)

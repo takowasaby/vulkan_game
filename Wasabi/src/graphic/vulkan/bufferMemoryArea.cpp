@@ -93,12 +93,12 @@ namespace wsb::graphic::vulkan {
 		}
 	}
 
-	void BufferMemoryArea::createBuffersForRendering(const PhysicalDevice& physicalDevice, const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices, const SwapChain& swapChain, const GraphicRender& render)
+	void BufferMemoryArea::createBuffersForRendering(const PhysicalDevice& physicalDevice, const QueueFamilies& queueFamilies, const std::vector<Vertex>& vertices, const std::vector<uint16_t>& indices, const SwapChain& swapChain, const GraphicRender& render, const TextureImageLoader& imageLoader, const TextureSampler& sampler)
 	{
 		createVertexBuffer(physicalDevice, queueFamilies, vertices);
 		createIndexBuffer(physicalDevice, queueFamilies, indices);
 		createUniformBuffers(physicalDevice, swapChain);
-		createDescriptorSets(swapChain, render);
+		createDescriptorSets(swapChain, render, imageLoader, sampler);
 		createCommandBuffers(indices.size(), swapChain, render);
 		indicisSizeCache = indices.size();
 	}
@@ -149,7 +149,7 @@ namespace wsb::graphic::vulkan {
 		this->endSingleTimeCommands(_transientCommandPool, queueFamilies, commandBuffer);
 	}
 
-	void BufferMemoryArea::updateSwapChainInfo(const PhysicalDevice& physicalDevice, const GraphicRender& render, const LogicalDevice& device, QueueFamilies::QueueFamilyIndices indices, const SwapChain& swapChain)
+	void BufferMemoryArea::updateSwapChainInfo(const PhysicalDevice& physicalDevice, const GraphicRender& render, const LogicalDevice& device, QueueFamilies::QueueFamilyIndices indices, const SwapChain& swapChain, const TextureImageLoader& imageLoader, const TextureSampler& sampler)
 	{
 		_descriptorPool.reset();
 		for (size_t i = 0; i < _swapChainFramebuffers.size(); i++) {
@@ -163,7 +163,7 @@ namespace wsb::graphic::vulkan {
 		_swapChainFramebuffers = render.createFrameBufferFromSwapChain(swapChain);
 		_descriptorPool = std::make_unique<DescriptorPool>(device, swapChain.getImageSize());
 		createUniformBuffers(physicalDevice, swapChain);
-		createDescriptorSets(swapChain, render);
+		createDescriptorSets(swapChain, render, imageLoader, sampler);
 		createCommandBuffers(indicisSizeCache, swapChain, render);
 	}
 
@@ -277,7 +277,7 @@ namespace wsb::graphic::vulkan {
 		endSingleTimeCommands(_transientCommandPool, queueFamilies, commandBuffer);
 	}
 
-	void BufferMemoryArea::createDescriptorSets(const SwapChain& swapChain, const GraphicRender& render) {
+	void BufferMemoryArea::createDescriptorSets(const SwapChain& swapChain, const GraphicRender& render, const TextureImageLoader& imageLoader, const TextureSampler& sampler) {
 		_descriptorSets = _descriptorPool->allocDescriptorSets(static_cast<uint32_t>(swapChain.getImageSize()), render.getDescriptorSetLayout());
 
 		for (size_t i = 0; i < _descriptorSets.size(); i++) {
@@ -286,17 +286,30 @@ namespace wsb::graphic::vulkan {
 			bufferInfo.offset = 0;
 			bufferInfo.range = sizeof(UniformBufferObject);
 
-			VkWriteDescriptorSet descriptorWrite = {};
-			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-			descriptorWrite.dstSet = _descriptorSets[i];
-			descriptorWrite.dstBinding = 0;
-			descriptorWrite.dstArrayElement = 0;
-			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-			descriptorWrite.descriptorCount = 1;
-			descriptorWrite.pBufferInfo = &bufferInfo;
-			descriptorWrite.pImageInfo = nullptr;
-			descriptorWrite.pTexelBufferView = nullptr;
-			vkUpdateDescriptorSets(_device, 1, &descriptorWrite, 0, nullptr);
+			VkDescriptorImageInfo imageInfo = {};
+			imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+			imageInfo.imageView = imageLoader.getTextureHandle();
+			imageInfo.sampler = sampler.getSamplerHandle();
+
+			std::array<VkWriteDescriptorSet, 2> descriptorWrite = {};
+			
+			descriptorWrite[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			descriptorWrite[0].dstSet = _descriptorSets[i];
+			descriptorWrite[0].dstBinding = 0;
+			descriptorWrite[0].dstArrayElement = 0;
+			descriptorWrite[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			descriptorWrite[0].descriptorCount = 1;
+			descriptorWrite[0].pBufferInfo = &bufferInfo;
+
+			descriptorWrite[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			descriptorWrite[1].dstSet = _descriptorSets[i];
+			descriptorWrite[1].dstBinding = 1;
+			descriptorWrite[1].dstArrayElement = 0;
+			descriptorWrite[1].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			descriptorWrite[1].descriptorCount = 1;
+			descriptorWrite[1].pImageInfo = &imageInfo;
+
+			vkUpdateDescriptorSets(_device, static_cast<uint32_t>(descriptorWrite.size()), descriptorWrite.data(), 0, nullptr);
 		}
 	}
 

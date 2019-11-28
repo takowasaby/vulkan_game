@@ -36,4 +36,8 @@ namespace wsb::graphic::vulkan {
 	{
 		vkDestroySampler(_device, _sampler, nullptr);
 	}
+	VkSampler TextureSampler::getSamplerHandle() const
+	{
+		return _sampler;
+	}
 }

@@ -11,6 +11,7 @@ namespace wsb {
 			struct Vertex {
 				alignas(8) glm::vec2 pos;
 				alignas(16) glm::vec4 color;
+				alignas(8) glm::vec2 texCoord;
 			};
 
 			VkVertexInputBindingDescription getVertexBindingDescription();
